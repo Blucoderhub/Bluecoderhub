@@ -1,0 +1,40 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Refined Circular Seal Logo -->
+  
+  <!-- Solid Black Background for the seal look -->
+  <circle cx="100" cy="100" r="98" fill="#000000"/>
+  
+  <!-- Outer Ring Border -->
+  <circle cx="100" cy="100" r="94" stroke="#FFFFFF" stroke-width="4"/>
+
+  <!-- High-Precision Isometric B -->
+  <g transform="translate(100, 103) scale(0.68)" stroke="#FFFFFF" stroke-width="5" stroke-linecap="butt" stroke-linejoin="miter">
+    <!-- Left vertical mast -->
+    <path d="M-40 -60 L0 -35 L0 85 L-40 60 Z" />
+    
+    <!-- Top Cube (Right Side) -->
+    <path d="M0 -35 L50 -60 L50 0 L0 25 Z" />
+    <path d="M-40 -60 L10 -85 L50 -60 L0 -35 Z" /> <!-- Top Plane -->
+    
+    <!-- Bottom Cube (Right Side) -->
+    <path d="M0 25 L50 0 L50 60 L0 85 Z" />
+    <path d="M-40 0 L10 -25 L50 0 L0 25 Z" /> <!-- Mid Plane -->
+    
+    <!-- Inner structural lines -->
+    <path d="M0 -35 L0 25 L0 85" stroke-width="2" opacity="0.4"/>
+    <path d="M10 -85 L10 35" stroke-width="2" opacity="0.3"/>
+  </g>
+
+  <!-- Circular Text -->
+  <defs>
+    <path id="topArc" d="M 35, 100 a 65,65 0 0,1 130,0" />
+    <path id="bottomArc" d="M 35, 100 a 65,65 0 0,0 130,0" />
+  </defs>
+
+  <text font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="900" fill="#FFFFFF" letter-spacing="4">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">BLUE CODER HUB</textPath>
+  </text>
+  <text font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="900" fill="#FFFFFF" letter-spacing="4">
+    <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">BLUE CODER HUB</textPath>
+  </text>
+</svg>

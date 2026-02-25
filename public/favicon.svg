@@ -1,0 +1,15 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Isometric B Standalone Icon -->
+  <g transform="translate(100, 100) scale(0.85)" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Left vertical mast -->
+    <path d="M-40 -60 L0 -35 L0 85 L-40 60 Z" />
+    
+    <!-- Top Cube (Right Side) -->
+    <path d="M0 -35 L50 -60 L50 0 L0 25 Z" />
+    <path d="M-40 -60 L10 -85 L50 -60 L0 -35 Z" /> <!-- Top Plane -->
+    
+    <!-- Bottom Cube (Right Side) -->
+    <path d="M0 25 L50 0 L50 60 L0 85 Z" />
+    <path d="M-40 0 L10 -25 L50 0 L0 25 Z" /> <!-- Mid Plane -->
+  </g>
+</svg>

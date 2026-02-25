@@ -1,0 +1,98 @@
+[
+    {
+        "id": "1",
+        "title": "The Architecture of Modern Open Source Ecosystems",
+        "category": "Technology",
+        "date": "2026-02-25",
+        "author": "Engineering Team",
+        "readTime": "8 min",
+        "excerpt": "A deep dive into how massive projects like Linux and Kubernetes maintain stability while accepting thousands of global contributions.",
+        "image": "os-architecture",
+        "tags": [
+            "Open Source",
+            "Architecture",
+            "Scaling"
+        ],
+        "content": "Modern open source is the foundation of the digital world. From the cloud to our pockets, decentralized collaboration has proven to be the most efficient way to build complex infrastructure. In this article, we explore the governance and technical patterns that allow these massive machines to run flawlessly..."
+    },
+    {
+        "id": "2",
+        "title": "Open Source Sustainability: Funding the Digital Commons",
+        "category": "Engineering",
+        "date": "2026-02-22",
+        "author": "Shankar R",
+        "readTime": "6 min",
+        "excerpt": "Discussing the critical challenge of maintaining open source at scale and the emerging models for financial sustainability.",
+        "image": "os-sustainability",
+        "tags": [
+            "Sustainability",
+            "Funding",
+            "Community"
+        ],
+        "content": "The internet runs on volunteers, but burnout is real. As the world becomes increasingly dependent on open protocols, we must find ways to support the maintainers who keep our critical infrastructure secure and up-to-date..."
+    },
+    {
+        "id": "3",
+        "title": "The Philosophy of FOSS: Beyond Code, into Community",
+        "category": "Design",
+        "date": "2026-02-18",
+        "author": "Giritharan R",
+        "readTime": "10 min",
+        "excerpt": "Exploring the social impact of Free and Open Source Software and how it facilitates global problem-solving through transparency.",
+        "image": "os-philosophy",
+        "tags": [
+            "Philosophy",
+            "Community",
+            "FOSS"
+        ],
+        "content": "Open source is more than a license; it is a mindset. By choosing transparency over secrecy, builders are creating a more equitable technological future where knowledge belongs to everyone..."
+    },
+    {
+        "id": "4",
+        "title": "Getting Started with Open Source: A Practical Guide",
+        "category": "Mobile",
+        "date": "2026-02-15",
+        "author": "Engineering Team",
+        "readTime": "5 min",
+        "excerpt": "A roadmap for developers looking to make their first meaningful contribution to the projects they use every day.",
+        "image": "os-guide",
+        "tags": [
+            "Guide",
+            "Git",
+            "Collaboration"
+        ],
+        "content": "Making your first pull request can be intimidating. Here is how to find the right project, communicate effectively with maintainers, and write code that gets merged..."
+    },
+    {
+        "id": "5",
+        "title": "Decentralized Innovation: Reshaping Infrastructure",
+        "category": "Technology",
+        "date": "2026-02-10",
+        "author": "Product Group",
+        "readTime": "12 min",
+        "excerpt": "How open source is decentralizing everything from AI models to financial protocols, breaking down traditional monopolies.",
+        "image": "os-innovation",
+        "tags": [
+            "Innovation",
+            "AI",
+            "Decentralization"
+        ],
+        "content": "The next wave of innovation will not happen in a closed laboratory. It will happen on public repositories where the best minds in the world can iterate on the bleeding edge in real-time..."
+    },
+    {
+        "id": "6",
+        "title": "Open Source in Enterprise: The Strategic Shift",
+        "category": "Company",
+        "date": "2026-02-05",
+        "author": "Business Unit",
+        "readTime": "7 min",
+        "excerpt": "Analyze why the world's biggest companies are moving away from proprietary lock-in towards open standards and collaborative development.",
+        "image": "os-enterprise",
+        "tags": [
+            "Enterprise",
+            "Business",
+            "Strategy"
+        ],
+        "content": "Fortune 500 companies are no longer just users of open source; they are major contributors. We investigate the ROI of open source and how it accelerates time-to-market for enterprise solutions..."
+    }
+]

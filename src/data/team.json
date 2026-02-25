@@ -1,0 +1,25 @@
+[
+    {
+        "id": "1",
+        "name": "Shankar R",
+        "role": "Founder & CEO",
+        "bio": "Mechanical Design Engineer with 4 years of experience. Passionate about leveraging technology to solve real-world problems and building products that matter.",
+        "avatar": "👨‍💼",
+        "social": {
+            "linkedin": "https://linkedin.com/in/shankar-r",
+            "github": "https://github.com/shankar-r",
+            "twitter": "https://twitter.com/shankar_r"
+        }
+    },
+    {
+        "id": "2",
+        "name": "Giritharan R",
+        "role": "CFO & Co-founder",
+        "bio": "MBA graduate currently pursuing his degree. Strategic financial leader with expertise in corporate growth and investment. Driving the fiscal vision and long-term sustainability of the Blue Coder Hub ecosystem.",
+        "avatar": "👨‍💼",
+        "social": {
+            "linkedin": "https://linkedin.com/in/giritharan-r",
+            "twitter": "https://twitter.com/giritharan_r"
+        }
+    }
+]

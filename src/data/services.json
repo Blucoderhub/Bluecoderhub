@@ -1,0 +1,115 @@
+[
+    {
+        "id": "software-dev",
+        "title": "Software Development",
+        "icon": "💻",
+        "shortDescription": "Custom enterprise software tailored to your business needs.",
+        "description": "We build scalable, maintainable software solutions using modern technologies. From startup MVPs to enterprise-grade systems, we deliver quality code that grows with your business.",
+        "features": [
+            "Custom ERP Systems",
+            "API Development",
+            "Microservices Architecture",
+            "Legacy Modernization",
+            "SaaS Products",
+            "Real-time Applications"
+        ],
+        "technologies": [
+            "Node.js",
+            "Python",
+            "Java",
+            "Go",
+            "PostgreSQL",
+            "MongoDB",
+            "Redis",
+            "Docker"
+        ],
+        "process": [
+            "Discovery & Analysis",
+            "Architecture Design",
+            "Agile Development",
+            "QA & Testing",
+            "Deployment",
+            "Ongoing Support"
+        ],
+        "caseStudy": {
+            "client": "FinCorp Solutions",
+            "result": "Reduced operational costs by 40% through automated workflows",
+            "duration": "6 months"
+        }
+    },
+    {
+        "id": "web-dev",
+        "title": "Web Development",
+        "icon": "🌐",
+        "shortDescription": "Stunning, high-performance websites and web applications.",
+        "description": "We craft beautiful, fast, and accessible web experiences. Whether it's a marketing site, e-commerce platform, or complex web application, we deliver with pixel-perfect precision.",
+        "features": [
+            "React/Next.js Applications",
+            "E-commerce Platforms",
+            "Progressive Web Apps",
+            "Landing Pages",
+            "CMS Integration",
+            "Performance Optimization"
+        ],
+        "technologies": [
+            "React",
+            "Next.js",
+            "Vue.js",
+            "TypeScript",
+            "TailwindCSS",
+            "GraphQL",
+            "Vercel",
+            "AWS"
+        ],
+        "process": [
+            "Design Mockups",
+            "UI Development",
+            "Backend Integration",
+            "SEO Optimization",
+            "Performance Testing",
+            "Launch & Monitor"
+        ],
+        "caseStudy": {
+            "client": "RetailBrand Co.",
+            "result": "300% increase in online conversions after website rebuild",
+            "duration": "3 months"
+        }
+    },
+    {
+        "id": "app-dev",
+        "title": "App Development",
+        "icon": "📱",
+        "shortDescription": "Native and cross-platform mobile apps for iOS & Android.",
+        "description": "We create mobile experiences that users love. Our apps are built with performance, usability, and security at the forefront, delivering native quality on both iOS and Android.",
+        "features": [
+            "React Native Cross-platform",
+            "Native iOS (Swift)",
+            "Native Android (Kotlin)",
+            "App Store Optimization",
+            "Push Notifications",
+            "Offline Support"
+        ],
+        "technologies": [
+            "React Native",
+            "Swift",
+            "Kotlin",
+            "Firebase",
+            "Redux",
+            "Expo",
+            "TestFlight"
+        ],
+        "process": [
+            "UX Research",
+            "Wireframing",
+            "Development",
+            "Device Testing",
+            "App Store Submission",
+            "Updates & Maintenance"
+        ],
+        "caseStudy": {
+            "client": "HealthTrack App",
+            "result": "100K+ downloads in first 3 months with 4.8★ rating",
+            "duration": "4 months"
+        }
+    }
+]

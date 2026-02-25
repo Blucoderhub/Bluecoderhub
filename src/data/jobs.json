@@ -1,0 +1,194 @@
+[
+    {
+        "id": "1",
+        "title": "Senior Full Stack Developer",
+        "department": "Engineering",
+        "type": "Full-time",
+        "location": "Remote",
+        "experience": "3-5 years",
+        "skills": [
+            "React",
+            "Node.js",
+            "AWS",
+            "PostgreSQL",
+            "TypeScript"
+        ],
+        "salary": "₹12L - ₹20L/year",
+        "description": "We're looking for a Senior Full Stack Developer to join our core engineering team and help build cutting-edge digital products for global clients.",
+        "responsibilities": [
+            "Design and develop scalable web applications",
+            "Collaborate with product managers and designers",
+            "Mentor junior developers",
+            "Lead technical architecture decisions",
+            "Participate in code reviews"
+        ],
+        "requirements": [
+            "3+ years of React and Node.js experience",
+            "Strong understanding of RESTful APIs",
+            "Experience with cloud platforms (AWS/GCP)",
+            "Excellent problem-solving skills",
+            "Strong communication skills"
+        ],
+        "posted": "2026-02-20"
+    },
+    {
+        "id": "2",
+        "title": "UI/UX Designer",
+        "department": "Design",
+        "type": "Full-time",
+        "location": "Hybrid",
+        "experience": "2-4 years",
+        "skills": [
+            "Figma",
+            "Adobe XD",
+            "Prototyping",
+            "User Research",
+            "CSS"
+        ],
+        "salary": "₹8L - ₹15L/year",
+        "description": "Join our design team to craft beautiful, intuitive user experiences for complex web and mobile applications.",
+        "responsibilities": [
+            "Create wireframes, prototypes and high-fidelity designs",
+            "Conduct user research and usability testing",
+            "Define design systems and component libraries",
+            "Collaborate closely with developers",
+            "Present design concepts to stakeholders"
+        ],
+        "requirements": [
+            "2+ years of UI/UX design experience",
+            "Proficiency in Figma and Adobe Creative Suite",
+            "Strong portfolio demonstrating design thinking",
+            "Understanding of frontend development",
+            "Excellent visual communication skills"
+        ],
+        "posted": "2026-02-18"
+    },
+    {
+        "id": "3",
+        "title": "Mobile App Developer (React Native)",
+        "department": "Engineering",
+        "type": "Full-time",
+        "location": "Remote",
+        "experience": "2-4 years",
+        "skills": [
+            "React Native",
+            "JavaScript",
+            "iOS",
+            "Android",
+            "Redux"
+        ],
+        "salary": "₹10L - ₹18L/year",
+        "description": "Build cross-platform mobile applications that delight users across iOS and Android platforms.",
+        "responsibilities": [
+            "Develop high-quality mobile applications using React Native",
+            "Optimize app performance and user experience",
+            "Integrate with backend APIs",
+            "Work with QA team for thorough testing",
+            "Publish and maintain apps on App Store and Play Store"
+        ],
+        "requirements": [
+            "2+ years of React Native development",
+            "Experience with native iOS and Android development",
+            "Knowledge of mobile UI/UX best practices",
+            "Experience with state management (Redux/Zustand)",
+            "Familiarity with CI/CD pipelines"
+        ],
+        "posted": "2026-02-15"
+    },
+    {
+        "id": "4",
+        "title": "DevOps Engineer",
+        "department": "Engineering",
+        "type": "Full-time",
+        "location": "Remote",
+        "experience": "3-5 years",
+        "skills": [
+            "Docker",
+            "Kubernetes",
+            "AWS",
+            "CI/CD",
+            "Terraform"
+        ],
+        "salary": "₹14L - ₹22L/year",
+        "description": "Help us build and maintain robust, scalable infrastructure that powers our products and client applications.",
+        "responsibilities": [
+            "Design and maintain CI/CD pipelines",
+            "Manage cloud infrastructure (AWS/GCP)",
+            "Implement security best practices",
+            "Monitor system performance and availability",
+            "Automate operational tasks"
+        ],
+        "requirements": [
+            "3+ years of DevOps/infrastructure experience",
+            "Strong knowledge of Docker and Kubernetes",
+            "Experience with Infrastructure as Code (Terraform)",
+            "AWS certifications preferred",
+            "Strong scripting skills (Python/Bash)"
+        ],
+        "posted": "2026-02-10"
+    },
+    {
+        "id": "5",
+        "title": "Business Development Manager",
+        "department": "Sales",
+        "type": "Full-time",
+        "location": "On-site (Bangalore)",
+        "experience": "3-6 years",
+        "skills": [
+            "Sales",
+            "Client Relations",
+            "Negotiation",
+            "B2B",
+            "CRM"
+        ],
+        "salary": "₹10L - ₹18L + Commission",
+        "description": "Drive business growth by identifying new opportunities, building relationships with potential clients, and closing deals.",
+        "responsibilities": [
+            "Identify and pursue new business opportunities",
+            "Manage the entire sales cycle from prospecting to closing",
+            "Build and maintain strong client relationships",
+            "Collaborate with technical team on proposals",
+            "Meet and exceed quarterly sales targets"
+        ],
+        "requirements": [
+            "3+ years of IT services/software sales",
+            "Strong network in the tech industry",
+            "Excellent presentation and negotiation skills",
+            "Experience with CRM tools",
+            "Goal-oriented mindset"
+        ],
+        "posted": "2026-02-05"
+    },
+    {
+        "id": "6",
+        "title": "Content Writer & Marketing Specialist",
+        "department": "Marketing",
+        "type": "Part-time",
+        "location": "Remote",
+        "experience": "1-3 years",
+        "skills": [
+            "Content Writing",
+            "SEO",
+            "Social Media",
+            "Blogging",
+            "Canva"
+        ],
+        "salary": "₹5L - ₹9L/year",
+        "description": "Create compelling content that tells our brand story and helps our audience understand the value we provide.",
+        "responsibilities": [
+            "Write blog posts and technical articles",
+            "Manage social media presence",
+            "Create marketing collateral",
+            "Develop email marketing campaigns",
+            "Track and analyze content performance"
+        ],
+        "requirements": [
+            "Strong writing and editing skills",
+            "Understanding of SEO principles",
+            "Experience with content management systems",
+            "Basic graphic design skills (Canva/Figma)",
+            "Portfolio of published work"
+        ],
+        "posted": "2026-01-28"
+    }
+]
