@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
@@ -8,6 +8,8 @@ import LiquidBlob from '../components/animations/LiquidBlob';
 import ParticleSystem from '../components/animations/ParticleSystem';
 import FadeInSection from '../components/animations/FadeInSection';
 import Button from '../components/common/Button';
+import { sanitizeURL } from '../security/sanitize';
+import { gsap, ScrollTrigger, useGSAPContext } from '../hooks/useScrollTrigger';
 import products from '../data/products.json';
 import blog from '../data/blog.json';
 
@@ -16,6 +18,11 @@ const blogColors = ['from-white/5', 'from-white/10', 'from-gray-900/40'];
 
 export default function Home() {
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    const heroBgRef = useRef(null);
+    const heroTextRef = useRef(null);
+    const productsSectionRef = useRef(null);
+    const blogSectionRef = useRef(null);
+    const ctaSectionRef = useRef(null);
 
     useEffect(() => {
         const handler = (e) => {
@@ -25,13 +32,106 @@ export default function Home() {
         return () => window.removeEventListener('mousemove', handler);
     }, []);
 
+    // ── ScrollTrigger animations ──────────────────────────────────────────────
+    useGSAPContext(() => {
+        // 1. Hero background parallax — image moves at 40% of scroll speed
+        if (heroBgRef.current) {
+            gsap.to(heroBgRef.current, {
+                yPercent: 40,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: heroBgRef.current.parentElement,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true,
+                },
+            });
+        }
+
+        // 2. Hero text subtle upward drift as user scrolls away
+        if (heroTextRef.current) {
+            gsap.to(heroTextRef.current, {
+                yPercent: -20,
+                opacity: 0,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: heroTextRef.current,
+                    start: 'top top',
+                    end: '60% top',
+                    scrub: true,
+                },
+            });
+        }
+
+        // 3. Products section — cards stagger in with a 3D tilt pop
+        if (productsSectionRef.current) {
+            gsap.fromTo(
+                productsSectionRef.current.querySelectorAll('.st-card'),
+                { opacity: 0, y: 60, rotateX: 15, transformOrigin: 'top center' },
+                {
+                    opacity: 1,
+                    y: 0,
+                    rotateX: 0,
+                    duration: 0.7,
+                    stagger: 0.15,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: productsSectionRef.current,
+                        start: 'top 75%',
+                        toggleActions: 'play none none none',
+                    },
+                }
+            );
+        }
+
+        // 4. Blog section — cards slide in from alternating sides
+        if (blogSectionRef.current) {
+            const cards = blogSectionRef.current.querySelectorAll('.st-blog-card');
+            cards.forEach((card, i) => {
+                gsap.fromTo(
+                    card,
+                    { opacity: 0, x: i % 2 === 0 ? -50 : 50 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.6,
+                        ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: card,
+                            start: 'top 85%',
+                            toggleActions: 'play none none none',
+                        },
+                    }
+                );
+            });
+        }
+
+        // 5. CTA section — scale up from 92% + fade in
+        if (ctaSectionRef.current) {
+            gsap.fromTo(
+                ctaSectionRef.current.querySelector('.st-cta-content'),
+                { opacity: 0, scale: 0.92 },
+                {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: ctaSectionRef.current,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none',
+                    },
+                }
+            );
+        }
+    }, []);
+
     return (
         <div className="min-h-screen">
             {/* ═══════════ HERO SECTION ═══════════ */}
-            {/* ═══════════ HERO SECTION ═══════════ */}
             <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
                 {/* Background Image Container */}
-                <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 z-0" ref={heroBgRef}>
                     <img
                         src="/src/assets/car-wireframe.jpg"
                         alt="Background"
@@ -50,7 +150,7 @@ export default function Home() {
                 />
 
                 {/* Hero Content */}
-                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full" ref={heroTextRef}>
                     <div className="max-w-3xl">
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
@@ -154,7 +254,7 @@ export default function Home() {
 
 
             {/* ═══════════ FEATURED PRODUCTS ═══════════ */}
-            <section className="section-padding max-w-7xl mx-auto px-4">
+            <section className="section-padding max-w-7xl mx-auto px-4" ref={productsSectionRef}>
                 <FadeInSection>
                     <div className="text-center mb-16">
                         <div className="inline-block px-4 py-1.5 rounded-full border border-white/20 bg-white/5 text-white/70 text-sm font-medium mb-4">
@@ -171,7 +271,7 @@ export default function Home() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 isometric-container">
                     {products.map((product, i) => (
-                        <FadeInSection key={product.id} delay={i * 0.1}>
+                        <div key={product.id} className="st-card">
                             <motion.div
                                 className="relative group glassmorphism rounded-2xl border border-white/10 p-6 isometric-card cursor-pointer h-full"
                                 style={{
@@ -223,9 +323,9 @@ export default function Home() {
                                     ))}
                                 </ul>
 
-                                {product.status === 'live' ? (
+                                {product.status === 'live' && sanitizeURL(product.url) ? (
                                     <a
-                                        href={product.url}
+                                        href={sanitizeURL(product.url)}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-gray-400 transition-colors group-hover:gap-3"
@@ -240,14 +340,14 @@ export default function Home() {
                                     <span className="text-sm text-gray-500">In Planning</span>
                                 )}
                             </motion.div>
-                        </FadeInSection>
+                        </div>
                     ))}
                 </div>
             </section>
 
 
             {/* ═══════════ BLOG PREVIEW ═══════════ */}
-            <section className="section-padding max-w-7xl mx-auto px-4">
+            <section className="section-padding max-w-7xl mx-auto px-4" ref={blogSectionRef}>
                 <FadeInSection>
                     <div className="flex items-center justify-between mb-16">
                         <div>
@@ -266,10 +366,10 @@ export default function Home() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {blog.slice(0, 3).map((post, i) => (
-                        <FadeInSection key={post.id} delay={i * 0.1}>
-                            <motion.div
-                                whileHover={{ y: -6 }}
-                                className="group glassmorphism rounded-2xl border border-white/10 overflow-hidden"
+                        <motion.div
+                            key={post.id}
+                            whileHover={{ y: -6 }}
+                            className="st-blog-card group glassmorphism rounded-2xl border border-white/10 overflow-hidden"
                             >
                                 <div className={`h-48 bg-gradient-to-br ${blogColors[i % blogColors.length]} to-transparent relative overflow-hidden`}>
                                     <div className="absolute inset-0 flex items-center justify-center text-6xl opacity-30">
@@ -298,17 +398,15 @@ export default function Home() {
                                     </Link>
                                 </div>
                             </motion.div>
-                        </FadeInSection>
                     ))}
                 </div>
             </section>
 
             {/* ═══════════ CTA SECTION ═══════════ */}
-            <section className="section-padding relative overflow-hidden border-t border-white/10">
+            <section className="section-padding relative overflow-hidden border-t border-white/10" ref={ctaSectionRef}>
                 <div className="absolute inset-0 bg-black" />
                 <LiquidBlob color="#ffffff" size={600} className="top-0 left-1/2 -translate-x-1/2 opacity-5" />
-                <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">
-                    <FadeInSection>
+                <div className="relative z-10 max-w-3xl mx-auto px-4 text-center st-cta-content">
                         <h2 className="text-4xl sm:text-5xl font-display font-bold text-white mb-6">
                             Ready to Build Something <span className="gradient-text">Amazing?</span>
                         </h2>
@@ -324,7 +422,6 @@ export default function Home() {
                                 Join Our Team
                             </Button>
                         </div>
-                    </FadeInSection>
                 </div>
             </section>
         </div>

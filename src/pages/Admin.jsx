@@ -66,7 +66,7 @@ function LoginScreen({ onLogin }) {
         try {
             const storedHash = await getStoredPasswordHash();
             if (!storedHash) {
-                setError('Admin password not configured. Set VITE_ADMIN_PASSWORD in your .env file.');
+                setError('Admin access is not configured. Please contact the system administrator.');
                 setLoading(false);
                 return;
             }
@@ -141,7 +141,7 @@ function LoginScreen({ onLogin }) {
                         </button>
                     </form>
                     <p className="text-xs text-gray-600 text-center mt-4">
-                        Configure via <code className="font-mono text-gray-500">VITE_ADMIN_PASSWORD</code> env var
+                        Restricted access — authorized personnel only
                     </p>
                 </div>
             </motion.div>
@@ -375,12 +375,14 @@ function AceSection() {
                 <div className="glassmorphism rounded-2xl border border-white/10 p-6">
                     <h3 className="font-semibold text-white mb-3">API Configuration</h3>
                     <div className="text-sm text-gray-400 leading-relaxed">
-                        <p>To enable AI features, set up your Anthropic API key:</p>
+                        <p>AI calls are proxied through a secure serverless function. Set your key in <strong>Vercel project settings → Environment Variables</strong> (not in any client-side file):</p>
                         <div className="mt-3 p-3 bg-black/30 rounded-xl font-mono text-xs text-white opacity-60 border border-white/5">
-                            VITE_ANTHROPIC_API_KEY=your_api_key_here
+                            ANTHROPIC_API_KEY=sk-ant-...
+                        </div>
+                        <div className="mt-3 p-3 bg-green-500/10 border border-green-500/30 rounded-xl text-xs text-green-300">
+                            This key is stored server-side only and is never included in the browser bundle or visible to users.
                         </div>
                         <p className="mt-3 text-xs text-gray-500">
-                            Add this to your <code className="font-mono">.env</code> file in the project root.
                             Get your API key from <a href="https://console.anthropic.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-400">console.anthropic.com</a>
                         </p>
                     </div>

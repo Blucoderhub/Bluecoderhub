@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { sanitizeURL } from '../../security/sanitize';
 
 const footerLinks = {
     Company: [
@@ -54,7 +55,7 @@ export default function Footer() {
                             {socialLinks.map(s => (
                                 <motion.a
                                     key={s.label}
-                                    href={s.url}
+                                    href={sanitizeURL(s.url)}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     whileHover={{ scale: 1.2, rotate: 5 }}
@@ -76,16 +77,16 @@ export default function Footer() {
                             <ul className="space-y-2">
                                 {links.map(link => (
                                     <li key={link.label}>
-                                        {link.external ? (
+                                        {link.external && sanitizeURL(link.external) ? (
                                             <a
-                                                href={link.external}
+                                                href={sanitizeURL(link.external)}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="text-gray-400 hover:text-white text-sm transition-colors duration-200"
                                             >
                                                 {link.label} ↗
                                             </a>
-                                        ) : (
+                                        ) : link.external ? null : (
                                             <Link
                                                 to={link.path}
                                                 className="text-gray-400 hover:text-white text-sm transition-colors duration-200"
@@ -128,9 +129,9 @@ export default function Footer() {
                         © {new Date().getFullYear()} Bluecoderhub PVT LTD. All rights reserved.
                     </p>
                     <div className="flex gap-6 text-sm">
-                        <Link to="/contact" className="text-gray-500 hover:text-gray-300 transition-colors">Privacy Policy</Link>
-                        <Link to="/contact" className="text-gray-500 hover:text-gray-300 transition-colors">Terms of Service</Link>
-                        <Link to="/contact" className="text-gray-500 hover:text-gray-300 transition-colors">Cookie Policy</Link>
+                        <Link to="/privacy" className="text-gray-500 hover:text-gray-300 transition-colors">Privacy Policy</Link>
+                        <Link to="/terms" className="text-gray-500 hover:text-gray-300 transition-colors">Terms of Service</Link>
+                        <Link to="/cookies" className="text-gray-500 hover:text-gray-300 transition-colors">Cookie Policy</Link>
                     </div>
                 </div>
             </div>

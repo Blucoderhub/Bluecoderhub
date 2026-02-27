@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import FadeInSection from '../components/animations/FadeInSection';
 import LiquidBlob from '../components/animations/LiquidBlob';
+import { gsap, ScrollTrigger, useGSAPContext } from '../hooks/useScrollTrigger';
 import team from '../data/team.json';
 
 const timeline = [
@@ -25,12 +26,97 @@ const quotes = [
 
 export default function About() {
     const [quoteIndex, setQuoteIndex] = useState(0);
+    const timelineRef = useRef(null);
+    const teamGridRef = useRef(null);
+    const valuesRef = useRef(null);
 
     useEffect(() => {
         const timer = setInterval(() => {
             setQuoteIndex((prev) => (prev + 1) % quotes.length);
         }, 6000);
         return () => clearInterval(timer);
+    }, []);
+
+    // ── ScrollTrigger animations ──────────────────────────────────────────────
+    useGSAPContext(() => {
+        // 1. Timeline vertical line: scaleY from 0 → 1 as user scrolls through section
+        if (timelineRef.current) {
+            const line = timelineRef.current.querySelector('.st-timeline-line');
+            if (line) {
+                gsap.fromTo(line,
+                    { scaleY: 0, transformOrigin: 'top center' },
+                    {
+                        scaleY: 1,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: timelineRef.current,
+                            start: 'top 70%',
+                            end: 'bottom 70%',
+                            scrub: 0.5,
+                        },
+                    }
+                );
+            }
+
+            // Timeline items pop in sequentially as line passes them
+            const items = timelineRef.current.querySelectorAll('.st-timeline-item');
+            items.forEach((item, i) => {
+                gsap.fromTo(item,
+                    { opacity: 0, x: -40 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.5,
+                        ease: 'power2.out',
+                        scrollTrigger: {
+                            trigger: item,
+                            start: 'top 80%',
+                            toggleActions: 'play none none none',
+                        },
+                    }
+                );
+            });
+        }
+
+        // 2. Team cards — stagger cascade from bottom
+        if (teamGridRef.current) {
+            gsap.fromTo(
+                teamGridRef.current.querySelectorAll('.st-team-card'),
+                { opacity: 0, y: 50 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    stagger: { amount: 0.6, from: 'start' },
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: teamGridRef.current,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none',
+                    },
+                }
+            );
+        }
+
+        // 3. Values cards — scale in with a slight bounce
+        if (valuesRef.current) {
+            gsap.fromTo(
+                valuesRef.current.querySelectorAll('.st-value-card'),
+                { opacity: 0, scale: 0.85 },
+                {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.5,
+                    stagger: 0.12,
+                    ease: 'back.out(1.4)',
+                    scrollTrigger: {
+                        trigger: valuesRef.current,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none',
+                    },
+                }
+            );
+        }
     }, []);
 
     return (
@@ -64,15 +150,13 @@ export default function About() {
 
             {/* Mission / Vision / Values */}
             <section className="max-w-7xl mx-auto px-4 py-16">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6" ref={valuesRef}>
                     {values.map((v, i) => (
-                        <FadeInSection key={v.title} delay={i * 0.1}>
-                            <div className="glassmorphism rounded-2xl border border-white/10 p-8 text-center">
-                                <div className="text-4xl mb-4">{v.icon}</div>
-                                <h3 className="font-display font-bold text-white text-xl mb-3">{v.title}</h3>
-                                <p className="text-gray-400 text-sm leading-relaxed">{v.desc}</p>
-                            </div>
-                        </FadeInSection>
+                        <div key={v.title} className="st-value-card glassmorphism rounded-2xl border border-white/10 p-8 text-center">
+                            <div className="text-4xl mb-4">{v.icon}</div>
+                            <h3 className="font-display font-bold text-white text-xl mb-3">{v.title}</h3>
+                            <p className="text-gray-400 text-sm leading-relaxed">{v.desc}</p>
+                        </div>
                     ))}
                 </div>
             </section>
@@ -93,12 +177,12 @@ export default function About() {
                     </div>
                 </FadeInSection>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" ref={teamGridRef}>
                     {team.map((member, i) => (
-                        <FadeInSection key={member.id} delay={i * 0.08}>
-                            <motion.div
-                                whileHover={{ y: -8, boxShadow: '0 20px 60px rgba(255,255,255,0.1)' }}
-                                className="glassmorphism rounded-2xl border border-white/20 p-6 text-center group transition-all duration-300"
+                        <motion.div
+                            key={member.id}
+                            whileHover={{ y: -8, boxShadow: '0 20px 60px rgba(255,255,255,0.1)' }}
+                            className="st-team-card glassmorphism rounded-2xl border border-white/20 p-6 text-center group transition-all duration-300"
                             >
                                 <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-4xl">
                                     {member.avatar}
@@ -121,13 +205,12 @@ export default function About() {
                                     ))}
                                 </div>
                             </motion.div>
-                        </FadeInSection>
                     ))}
                 </div>
             </section>
 
             {/* Timeline */}
-            <section className="max-w-4xl mx-auto px-4 py-16">
+            <section className="max-w-4xl mx-auto px-4 py-16" ref={timelineRef}>
                 <FadeInSection>
                     <div className="text-center mb-16">
                         <h2 className="text-4xl font-display font-bold text-white mb-4">
@@ -136,20 +219,19 @@ export default function About() {
                     </div>
                 </FadeInSection>
                 <div className="relative">
-                    <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-white/60 via-white/10 to-transparent" />
+                    {/* Animated line — scaleY driven by ScrollTrigger scrub */}
+                    <div className="st-timeline-line absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-white/60 via-white/20 to-transparent" />
                     <div className="space-y-8">
                         {timeline.map((item, i) => (
-                            <FadeInSection key={item.id} delay={i * 0.1} direction="left">
-                                <div className="flex gap-6 pl-10 relative">
-                                    <div className="absolute left-0 w-12 h-12 rounded-xl bg-white flex items-center justify-center text-black font-bold text-xs font-mono flex-shrink-0 mt-1 shadow-[0_0_30px_rgba(255,255,255,0.4)]">
-                                        PH {i + 1}
-                                    </div>
-                                    <div className="glassmorphism rounded-2xl border border-white/10 p-5 flex-1">
-                                        <h3 className="font-display font-semibold text-white text-base mb-2">{item.title}</h3>
-                                        <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
-                                    </div>
+                            <div key={item.id} className="st-timeline-item flex gap-6 pl-10 relative">
+                                <div className="absolute left-0 w-12 h-12 rounded-xl bg-white flex items-center justify-center text-black font-bold text-xs font-mono flex-shrink-0 mt-1 shadow-[0_0_30px_rgba(255,255,255,0.4)]">
+                                    PH {i + 1}
                                 </div>
-                            </FadeInSection>
+                                <div className="glassmorphism rounded-2xl border border-white/10 p-5 flex-1">
+                                    <h3 className="font-display font-semibold text-white text-base mb-2">{item.title}</h3>
+                                    <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
+                                </div>
+                            </div>
                         ))}
                     </div>
                 </div>

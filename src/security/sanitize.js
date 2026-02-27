@@ -1,6 +1,11 @@
 /**
  * SECURITY — Input Sanitization Module
  * Prevents XSS, prompt injection, and path traversal attacks.
+ *
+ * NOTE: React JSX auto-escapes all values rendered as text nodes.
+ * These functions are primarily used to sanitize inputs before:
+ *   1. Injecting into AI prompts (prompt injection prevention)
+ *   2. Any non-JSX HTML context (e.g. innerHTML)
  */
 
 const MAX_INPUT_LENGTH = 5000;
@@ -8,22 +13,47 @@ const MAX_SHORT_LENGTH = 500;
 const MAX_EMAIL_LENGTH = 254; // RFC 5321
 
 /**
- * Strip HTML/script tags and limit string length.
- * Safe for use before storing or injecting into prompts.
+ * Decode common HTML entities to catch encoded XSS payloads
+ * (e.g. &#60;script&#62; → <script>).
+ */
+function decodeEntities(str) {
+    return str
+        .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
+        .replace(/&#(\d+);/g, (_, dec) => String.fromCharCode(parseInt(dec, 10)))
+        .replace(/&lt;/gi, '<')
+        .replace(/&gt;/gi, '>')
+        .replace(/&amp;/gi, '&')
+        .replace(/&quot;/gi, '"')
+        .replace(/&#x27;/gi, "'")
+        .replace(/&apos;/gi, "'");
+}
+
+/**
+ * Strip HTML/script tags, dangerous protocols, event handlers, and limit string length.
+ * Safe for use before storing or injecting into AI prompts.
  */
 export function sanitizeInput(value, maxLength = MAX_SHORT_LENGTH) {
     if (value === null || value === undefined) return '';
-    const str = String(value);
-    // Remove HTML tags
+    let str = String(value);
+
+    // Decode entities first to expose encoded attack patterns
+    str = decodeEntities(str);
+
     const stripped = str
+        // Remove HTML/XML tags (including their attributes and event handlers)
         .replace(/<[^>]*>/g, '')
-        // Remove dangerous JS protocols
-        .replace(/javascript:/gi, '')
+        // Remove dangerous URL protocols (case-insensitive, handles spaces/newlines in protocol)
+        .replace(/j[\s\S]*a[\s\S]*v[\s\S]*a[\s\S]*s[\s\S]*c[\s\S]*r[\s\S]*i[\s\S]*p[\s\S]*t[\s\S]*:/gi, '')
+        .replace(/v[\s\S]*b[\s\S]*s[\s\S]*c[\s\S]*r[\s\S]*i[\s\S]*p[\s\S]*t[\s\S]*:/gi, '')
         .replace(/data:/gi, '')
-        .replace(/vbscript:/gi, '')
-        // Remove null bytes
+        // Remove standalone event handler patterns (outside of tags)
+        .replace(/on\w+\s*=/gi, '')
+        // Remove CSS expression() attacks
+        .replace(/expression\s*\(/gi, '')
+        // Remove null bytes and other control characters
         .replace(/\0/g, '')
         .trim();
+
     return stripped.slice(0, maxLength);
 }
 
@@ -61,6 +91,7 @@ export function sanitizeFileName(name) {
 
 /**
  * Sanitize a URL — only allows http/https protocols.
+ * Returns empty string for any other protocol (javascript:, data:, vbscript:, etc.)
  */
 export function sanitizeURL(url) {
     if (!url) return '';
@@ -89,6 +120,7 @@ export function escapeHTML(str) {
 
 /**
  * Strip all non-printable / control characters from a string.
+ * Used before injecting user input into AI prompts.
  */
 export function sanitizeForPrompt(value, maxLength = MAX_SHORT_LENGTH) {
     const sanitized = sanitizeInput(value, maxLength);

@@ -1,56 +1,66 @@
 /**
- * Anthropic Claude API Integration — Security-Hardened
- * - Rate limited (5 calls/min via rateLimit.js)
- * - All user inputs sanitized before injection into prompts
- * - Input length capped to prevent prompt injection
+ * Anthropic Claude API Integration
+ *
+ * Production: All calls go through /api/ai (Vercel serverless proxy).
+ *   - API key stays server-side, never bundled into client JS.
+ *   - Server enforces IP-based rate limiting.
+ *
+ * Development: Falls back to direct browser call if VITE_ANTHROPIC_API_KEY
+ *   is set in .env.local (never commit this file).
  */
 
 import { checkRateLimit, recordCall } from '../security/rateLimit.js';
 import { sanitizeForPrompt } from '../security/sanitize.js';
 import { AI_MODEL, ANTHROPIC_API_VERSION, MAX_AI_INPUT_LENGTH } from '../config/constants.js';
 
-const ANTHROPIC_API_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY;
-
 async function callClaude(messages, maxTokens = 1000) {
-    if (!ANTHROPIC_API_KEY || ANTHROPIC_API_KEY === '') {
-        throw new Error('AI is not configured. Please contact the administrator.');
-    }
-
-    // Rate limit check
+    // Client-side rate limit (UX guard — server enforces the hard limit)
     const { allowed, waitMs } = checkRateLimit('ai_call');
     if (!allowed) {
         const secs = Math.ceil(waitMs / 1000);
         throw new Error(`Too many AI requests. Please wait ${secs} second${secs !== 1 ? 's' : ''} and try again.`);
     }
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': ANTHROPIC_API_KEY,
-            'anthropic-version': ANTHROPIC_API_VERSION,
-            'anthropic-dangerous-direct-browser-calls': 'true',
-        },
-        body: JSON.stringify({
-            model: AI_MODEL,
-            max_tokens: maxTokens,
-            messages,
-        }),
-    });
+    let response;
+
+    if (import.meta.env.DEV && import.meta.env.VITE_ANTHROPIC_API_KEY) {
+        // ── DEV ONLY: direct browser call with local key ──────────────────────
+        // Set VITE_ANTHROPIC_API_KEY only in .env.local (git-ignored).
+        // This code path is dead-code-eliminated in production builds.
+        response = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-api-key': import.meta.env.VITE_ANTHROPIC_API_KEY,
+                'anthropic-version': ANTHROPIC_API_VERSION,
+                'anthropic-dangerous-direct-browser-calls': 'true',
+            },
+            body: JSON.stringify({ model: AI_MODEL, max_tokens: maxTokens, messages }),
+        });
+    } else {
+        // ── PRODUCTION: secure server-side proxy (api/ai.js) ─────────────────
+        response = await fetch('/api/ai', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ messages, maxTokens }),
+        });
+    }
 
     recordCall('ai_call');
 
     if (!response.ok) {
         const err = await response.json().catch(() => ({}));
-        // Do NOT expose raw API error details to users in production
         if (import.meta.env.DEV) {
             console.error('[AI] API error:', err);
         }
-        throw new Error(err.error?.message || 'AI request failed. Please try again.');
+        throw new Error(err.error || 'AI request failed. Please try again.');
     }
 
     const data = await response.json();
-    return data.content[0].text;
+    // Dev direct call returns Anthropic format; proxy returns { text }
+    return import.meta.env.DEV && import.meta.env.VITE_ANTHROPIC_API_KEY
+        ? data.content[0].text
+        : data.text;
 }
 
 /**
