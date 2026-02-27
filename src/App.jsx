@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route, useLocation, Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect } from 'react';
 import ErrorBoundary from './components/layout/ErrorBoundary';
+import { initSelfHealing } from './utils/selfHealing';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import Home from './pages/Home';
@@ -74,6 +76,12 @@ function AppRoutes() {
 }
 
 export default function App() {
+    // Boot the self-healing engine once on app startup.
+    // Admin must be authenticated to pause/stop it from Admin panel.
+    useEffect(() => {
+        initSelfHealing();
+    }, []);
+
     return (
         <ErrorBoundary>
             <BrowserRouter>

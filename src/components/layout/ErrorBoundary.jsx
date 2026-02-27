@@ -1,9 +1,11 @@
 import { Component } from 'react';
+import { recordComponentError, attemptErrorRecovery } from '../../utils/selfHealing';
 
 /**
  * SECURITY — React Error Boundary
  * Catches render errors and shows a user-friendly message.
  * Prevents stack traces from being exposed to users in production.
+ * Reports crashes to the self-healing engine for auto-recovery.
  */
 export default class ErrorBoundary extends Component {
     constructor(props) {
@@ -16,12 +18,25 @@ export default class ErrorBoundary extends Component {
     }
 
     componentDidCatch(error, errorInfo) {
+        const errorId = this.state.errorId;
+        const componentName = errorInfo?.componentStack?.split('\n')[1]?.trim() || 'Unknown';
+        const errorMessage = error?.message || String(error);
+
         // Log to console only — no third-party leak
-        // In production, replace with your own logging endpoint (never expose raw errors)
         if (import.meta.env.DEV) {
             console.error('[ErrorBoundary] Caught error:', error, errorInfo);
         } else {
-            console.error('[ErrorBoundary] An unexpected error occurred. Error ID:', this.state.errorId);
+            console.error('[ErrorBoundary] Unexpected error. Error ID:', errorId);
+        }
+
+        // Report to self-healing engine so it can log & attempt recovery
+        try {
+            recordComponentError(errorId, componentName, errorMessage);
+            // Attempt to restore the current page's content from the last snapshot
+            const page = window.location.pathname.replace('/', '') || 'home';
+            attemptErrorRecovery(page);
+        } catch {
+            // Self-healing unavailable — ignore silently
         }
     }
 

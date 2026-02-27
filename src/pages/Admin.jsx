@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { storage } from '../utils/storage';
 import { modifyContent, generateBlogContent } from '../utils/ai';
 import { useAI } from '../hooks/useAI';
+import SelfHealingPanel from '../components/admin/SelfHealingPanel';
 import {
     verifyPassword,
     getStoredPasswordHash,
@@ -12,6 +13,7 @@ import {
     clearAdminSession,
 } from '../security/auth';
 import { checkRateLimit, recordCall, formatWaitTime } from '../security/rateLimit';
+import { isSelfHealingEnabled, subscribe as subscribeHealing } from '../utils/selfHealing';
 
 const sections = [
     { id: 'dashboard', icon: '📊', label: 'Dashboard' },
@@ -21,6 +23,7 @@ const sections = [
     { id: 'applications', icon: '👥', label: 'Applications' },
     { id: 'subscribers', icon: '📧', label: 'Subscribers' },
     { id: 'ace', icon: '🤖', label: 'ACE AI Engine' },
+    { id: 'selfhealing', icon: '🔁', label: 'Self-Healing' },
 ];
 
 function LoginScreen({ onLogin }) {
@@ -398,7 +401,14 @@ export default function Admin() {
         return getAdminSession() !== null;
     });
     const [activeSection, setActiveSection] = useState('dashboard');
+    const [healingActive, setHealingActive] = useState(isSelfHealingEnabled);
     const navigate = useNavigate();
+
+    // Sync healing indicator with engine changes
+    useEffect(() => {
+        const unsub = subscribeHealing(() => setHealingActive(isSelfHealingEnabled()));
+        return unsub;
+    }, []);
 
     // Auto-logout when session expires (check every minute)
     useEffect(() => {
@@ -423,6 +433,7 @@ export default function Admin() {
             case 'applications': return <ApplicationsSection />;
             case 'subscribers': return <SubscribersSection />;
             case 'ace': return <AceSection />;
+            case 'selfhealing': return <SelfHealingPanel />;
             default:
                 return (
                     <div className="text-center py-20 text-gray-500">
@@ -451,7 +462,13 @@ export default function Admin() {
                             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${activeSection === s.id ? 'bg-white/10 text-white border border-white/20' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
                         >
                             <span>{s.icon}</span>
-                            {s.label}
+                            <span className="flex-1 text-left">{s.label}</span>
+                            {s.id === 'selfhealing' && (
+                                <span
+                                    title={healingActive ? 'Self-healing active' : 'Self-healing paused'}
+                                    className={`w-2 h-2 rounded-full flex-shrink-0 ${healingActive ? 'bg-green-400 shadow-[0_0_6px_#4ade80]' : 'bg-gray-600'}`}
+                                />
+                            )}
                         </button>
                     ))}
                 </nav>

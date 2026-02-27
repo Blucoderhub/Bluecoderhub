@@ -20,6 +20,7 @@ export const SOCIAL_LINKS = {
 };
 
 export const PRODUCT_URLS = {
+    bluecoderhub: 'https://bluecoderhub.com',
     bluelearnerhub: 'https://bluelearnerhub.com',
 };
 
