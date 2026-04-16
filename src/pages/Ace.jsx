@@ -5,22 +5,23 @@ import LiquidBlob from '../components/animations/LiquidBlob';
 import ParticleSystem from '../components/animations/ParticleSystem';
 import { useAI } from '../hooks/useAI';
 import { modifyContent } from '../utils/ai';
+import { FiFileText, FiImage, FiPenTool, FiCode, FiCpu, FiShoppingCart, FiUsers, FiDollarSign, FiHelpCircle } from 'react-icons/fi';
 
 const features = [
-    { icon: '🤖', title: 'Smart Content Editor', desc: 'Update any section of your website using plain English commands. No code required.', color: '#ffffff' },
-    { icon: '📝', title: 'Text File Management', desc: 'Upload, edit, and manage .txt content files directly from the browser with auto-formatting.', color: '#999999' },
-    { icon: '🖼️', title: 'Image Management', desc: 'Drag-and-drop image uploads with AI-powered optimization, smart cropping, and alt-text generation.', color: '#666666' },
-    { icon: '🎨', title: 'Visual Section Builder', desc: 'Build and rearrange website sections visually with pre-built templates and custom layouts.', color: '#333333' },
-    { icon: '💻', title: 'AI Code Modifier', desc: 'Describe a feature in plain language and ACE generates safe, reviewable code changes instantly.', color: '#aaaaaa' },
+    { icon: <FiCpu />, title: 'Smart Content Editor', desc: 'Update any section of your website using plain English commands. No code required.', color: '#ffffff' },
+    { icon: <FiFileText />, title: 'Text File Management', desc: 'Upload, edit, and manage .txt content files directly from the browser with auto-formatting.', color: '#999999' },
+    { icon: <FiImage />, title: 'Image Management', desc: 'Drag-and-drop image uploads with AI-powered optimization, smart cropping, and alt-text generation.', color: '#666666' },
+    { icon: <FiPenTool />, title: 'Visual Section Builder', desc: 'Build and rearrange website sections visually with pre-built templates and custom layouts.', color: '#333333' },
+    { icon: <FiCode />, title: 'AI Code Modifier', desc: 'Describe a feature in plain language and ACE generates safe, reviewable code changes instantly.', color: '#aaaaaa' },
 ];
 
 const useCases = [
-    { icon: '📰', title: 'Blog Content Updates', desc: 'Update article headlines, body text, and metadata with a single instruction.' },
-    { icon: '🛒', title: 'Product Descriptions', desc: 'Rewrite product copy for different audiences or campaigns using AI.' },
-    { icon: '🖼️', title: 'Image Galleries', desc: 'Auto-optimize, tag, and organize image libraries for your website.' },
-    { icon: '👥', title: 'Team Profiles', desc: 'Add or update team member profiles without touching any code.' },
-    { icon: '💰', title: 'Pricing Tables', desc: 'Update pricing, features, and CTAs across multiple pages simultaneously.' },
-    { icon: '❓', title: 'FAQ Sections', desc: 'Manage and reorder FAQ content with AI-assisted answer generation.' },
+    { icon: <FiFileText />, title: 'Blog Content Updates', desc: 'Update article headlines, body text, and metadata with a single instruction.' },
+    { icon: <FiShoppingCart />, title: 'Product Descriptions', desc: 'Rewrite product copy for different audiences or campaigns using AI.' },
+    { icon: <FiImage />, title: 'Image Galleries', desc: 'Auto-optimize, tag, and organize image libraries for your website.' },
+    { icon: <FiUsers />, title: 'Team Profiles', desc: 'Add or update team member profiles without touching any code.' },
+    { icon: <FiDollarSign />, title: 'Pricing Tables', desc: 'Update pricing, features, and CTAs across multiple pages simultaneously.' },
+    { icon: <FiHelpCircle />, title: 'FAQ Sections', desc: 'Manage and reorder FAQ content with AI-assisted answer generation.' },
 ];
 
 export default function Ace() {
@@ -148,7 +149,7 @@ export default function Ace() {
                                 <motion.span animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity }}
                                     className="w-4 h-4 border-2 border-black border-t-transparent rounded-full" />
                                 Processing...
-                            </> : '🤖 Generate with ACE'}
+                            </> : <><FiCpu className="mr-2" /> Generate with ACE</>}
                         </button>
 
                         <AnimatePresence>

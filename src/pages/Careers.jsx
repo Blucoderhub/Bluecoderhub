@@ -3,15 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import FadeInSection from '../components/animations/FadeInSection';
 import LiquidBlob from '../components/animations/LiquidBlob';
 import ParticleSystem from '../components/animations/ParticleSystem';
-
-
+import { FiRocket, FiUsers, FiBookOpen, FiSun, FiGlobe } from 'react-icons/fi';
 
 const cultureSlides = [
-    { title: 'Innovation First', desc: 'We believe in pushing boundaries and embracing new technologies. Every project is a chance to innovate.', icon: '🚀' },
-    { title: 'Collaborative Environment', desc: 'Ideas come from everywhere. We have a flat hierarchy where every voice matters and collaboration thrives.', icon: '🤝' },
-    { title: 'Continuous Learning', desc: 'We invest in our people. From learning budgets to weekly knowledge-sharing sessions, growth never stops.', icon: '📚' },
-    { title: 'Work-Life Balance', desc: 'Sustainable pace, flexible hours, and a focus on personal wellness. We work hard and recharge well.', icon: '⚖️' },
-    { title: 'Global Impact', desc: 'Our products reach users in 5+ countries. The work you do here reaches and inspires people worldwide.', icon: '🌍' },
+    { title: 'Innovation First', desc: 'We believe in pushing boundaries and embracing new technologies. Every project is a chance to innovate.', icon: <FiRocket /> },
+    { title: 'Collaborative Environment', desc: 'Ideas come from everywhere. We have a flat hierarchy where every voice matters and collaboration thrives.', icon: <FiUsers /> },
+    { title: 'Continuous Learning', desc: 'We invest in our people. From learning budgets to weekly knowledge-sharing sessions, growth never stops.', icon: <FiBookOpen /> },
+    { title: 'Work-Life Balance', desc: 'Sustainable pace, flexible hours, and a focus on personal wellness. We work hard and recharge well.', icon: <FiSun /> },
+    { title: 'Global Impact', desc: 'Our products reach users in 5+ countries. The work you do here reaches and inspires people worldwide.', icon: <FiGlobe /> },
 ];
 
 
@@ -105,7 +104,7 @@ export default function Careers() {
                                 transition={{ duration: 0.4 }}
                                 className="p-12 text-center min-h-[220px] flex flex-col items-center justify-center"
                             >
-                                <div className="text-6xl mb-6">{cultureSlides[cultureSlide].icon}</div>
+                                <div className="text-6xl mb-6 text-brand-blue flex justify-center">{cultureSlides[cultureSlide].icon}</div>
                                 <h3 className="text-2xl font-display font-bold text-white mb-4">{cultureSlides[cultureSlide].title}</h3>
                                 <p className="text-gray-400 max-w-xl leading-relaxed">{cultureSlides[cultureSlide].desc}</p>
                             </motion.div>

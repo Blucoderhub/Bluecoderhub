@@ -6,6 +6,18 @@ import FadeInSection from '../components/animations/FadeInSection';
 import Button from '../components/common/Button';
 import products from '../data/products.json';
 import { Link } from 'react-router-dom';
+import { MdSchool, MdAccountBalance, MdGroups } from 'react-icons/md';
+
+const getProductIcon = (id) => {
+    switch (id) {
+        case 'bluelearnerhub': return <MdSchool />;
+        case 'financeapp': return <MdAccountBalance />;
+        case 'hrplatform': return <MdGroups />;
+        default: return <MdGroups />;
+    }
+};
+
+import { FiUser } from 'react-icons/fi';
 
 export default function Home() {
     return (
@@ -59,7 +71,9 @@ export default function Home() {
                             that allow enterprises to thrive in an era of rapid disruption."
                         </blockquote>
                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-xl">👤</div>
+                            <div className="w-12 h-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-xl text-white">
+                                <FiUser />
+                            </div>
                             <div>
                                 <div className="text-sm font-bold text-white">Shankar R</div>
                                 <div className="text-xs text-gray-400">CEO, Bluecoderhub PVT LTD</div>
@@ -95,7 +109,9 @@ export default function Home() {
                                 whileHover={{ y: -10 }}
                                 className="group"
                             >
-                                <div className="text-6xl mb-8 group-hover:scale-110 transition-transform duration-500 origin-left">{p.icon}</div>
+                                <div className="text-6xl mb-8 group-hover:scale-110 transition-transform duration-500 origin-left text-brand-blue">
+                                    {getProductIcon(p.id)}
+                                </div>
                                 <h3 className="text-2xl font-display font-bold mb-3">{p.name}</h3>
                                 <p className="text-gray-500 mb-6 line-clamp-3 leading-relaxed">
                                     {p.description}

@@ -3,7 +3,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import FadeInSection from '../components/animations/FadeInSection';
 import LiquidBlob from '../components/animations/LiquidBlob';
 import { gsap, ScrollTrigger, useGSAPContext } from '../hooks/useScrollTrigger';
+import { FiTarget, FiEye, FiAward, FiUser, FiLinkedin, FiGithub, FiTwitter } from 'react-icons/fi';
 import team from '../data/team.json';
+
+const SocialIcon = ({ platform }) => {
+    switch (platform) {
+        case 'linkedin': return <FiLinkedin />;
+        case 'github': return <FiGithub />;
+        case 'twitter': return <FiTwitter />;
+        default: return <FiUser />;
+    }
+};
 
 const timeline = [
     { id: '1', title: 'The Genesis', desc: 'Bluecoderhub PVT LTD established as a center for technological innovation and strategic product development.' },
@@ -11,9 +21,9 @@ const timeline = [
 ];
 
 const values = [
-    { icon: '🎯', title: 'Mission', desc: 'To empower businesses with cutting-edge technology that drives growth, efficiency, and innovation.' },
-    { icon: '👁️', title: 'Vision', desc: 'To be the most trusted technology partner for startups and enterprises worldwide.' },
-    { icon: '💎', title: 'Values', desc: 'Excellence, integrity, continuous learning, collaboration, and user-centric thinking in everything we do.' },
+    { icon: <FiTarget />, title: 'Mission', desc: 'To empower businesses with cutting-edge technology that drives growth, efficiency, and innovation.' },
+    { icon: <FiEye />, title: 'Vision', desc: 'To be the most trusted technology partner for startups and enterprises worldwide.' },
+    { icon: <FiAward />, title: 'Values', desc: 'Excellence, integrity, continuous learning, collaboration, and user-centric thinking in everything we do.' },
 ];
 
 const quotes = [
@@ -153,7 +163,7 @@ export default function About() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6" ref={valuesRef}>
                     {values.map((v, i) => (
                         <div key={v.title} className="st-value-card glassmorphism rounded-2xl border border-white/10 p-8 text-center">
-                            <div className="text-4xl mb-4">{v.icon}</div>
+                            <div className="text-4xl mb-6 flex justify-center text-brand-blue">{v.icon}</div>
                             <h3 className="font-display font-bold text-white text-xl mb-3">{v.title}</h3>
                             <p className="text-gray-400 text-sm leading-relaxed">{v.desc}</p>
                         </div>
@@ -184,8 +194,8 @@ export default function About() {
                             whileHover={{ y: -8, boxShadow: '0 20px 60px rgba(255,255,255,0.1)' }}
                             className="st-team-card glassmorphism rounded-2xl border border-white/20 p-6 text-center group transition-all duration-300"
                             >
-                                <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-4xl">
-                                    {member.avatar}
+                                <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-4xl text-brand-blue">
+                                    <FiUser />
                                 </div>
                                 <h3 className="font-display font-bold text-white text-lg mb-1">{member.name}</h3>
                                 <p className="text-white opacity-60 text-sm font-medium mb-3">{member.role}</p>
@@ -197,10 +207,10 @@ export default function About() {
                                             href={url}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-xs text-gray-400 hover:text-white hover:border-white/50 transition-all"
+                                            className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-brand-blue transition-all"
                                             aria-label={platform}
                                         >
-                                            {platform === 'linkedin' ? '💼' : platform === 'github' ? '🐙' : '🐦'}
+                                            <SocialIcon platform={platform} />
                                         </a>
                                     ))}
                                 </div>

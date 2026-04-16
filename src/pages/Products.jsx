@@ -4,6 +4,16 @@ import { Link } from 'react-router-dom';
 import FadeInSection from '../components/animations/FadeInSection';
 import LiquidBlob from '../components/animations/LiquidBlob';
 import products from '../data/products.json';
+import { MdSchool, MdAccountBalance } from 'react-icons/md';
+import { FiCodepen, FiCpu, FiActivity, FiSettings, FiLayers, FiDatabase, FiZap, FiGlobe } from 'react-icons/fi';
+
+const getProductIcon = (id) => {
+    switch (id) {
+        case 'bluelearnerhub': return <MdSchool />;
+        case 'financeapp': return <MdAccountBalance />;
+        default: return <MdAccountBalance />;
+    }
+};
 
 export default function Products() {
     const [notifyEmail, setNotifyEmail] = useState('');
@@ -43,7 +53,7 @@ export default function Products() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div>
                             <div className="inline-flex items-center gap-3 mb-6">
-                                <span className="text-5xl">🎓</span>
+                                <div className="text-5xl text-brand-blue">{getProductIcon('bluelearnerhub')}</div>
                                 <div>
                                     <div className="inline-block px-3 py-1 rounded-full bg-white text-black text-xs font-bold mb-1">
                                         LIVE
@@ -95,8 +105,8 @@ export default function Products() {
                                 style={{ boxShadow: '0 0 60px rgba(255,255,255,0.05)' }}>
                                 <div className="absolute top-0 left-0 right-0 h-1 bg-white opacity-50" />
                                 <div className="text-center mb-6">
-                                    <div className="text-8xl mb-4">🎓</div>
-                                    <div className="text-2xl font-display font-bold text-white">Bluelearnerhub</div>
+                                    <div className="text-8xl mb-4 flex justify-center text-brand-blue">{getProductIcon('bluelearnerhub')}</div>
+                                    <div className="text-2xl font-display font-bold text-white">Bluelearnerhub</div>Bluelearnerhub</div>
                                     <div className="text-white opacity-50 text-sm">Learn • Code • Grow</div>
                                 </div>
                                 <div className="space-y-3">
@@ -108,8 +118,8 @@ export default function Products() {
                                             transition={{ delay: i * 0.1 }}
                                             className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/10"
                                         >
-                                            <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-sm">
-                                                {['⚛️', '🚀', '🤖', '⚙️'][i]}
+                                            <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-brand-blue">
+                                                {[<FiCodepen />, <FiCpu />, <FiActivity />, <FiSettings />][i]}
                                             </div>
                                             <div>
                                                 <div className="text-sm text-white font-medium">{course}</div>
@@ -137,7 +147,7 @@ export default function Products() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div className="lg:order-2">
                             <div className="inline-flex items-center gap-3 mb-6">
-                                <span className="text-5xl">💰</span>
+                                <div className="text-5xl text-brand-blue">{getProductIcon('financeapp')}</div>
                                 <div>
                                     <div className="inline-block px-3 py-1 rounded-full border border-white/20 text-gray-500 text-xs font-bold mb-1">
                                         COMING SOON
@@ -208,15 +218,15 @@ export default function Products() {
                                     COMING SOON
                                 </div>
                                 <div className="text-center mb-6">
-                                    <div className="text-8xl mb-4">💰</div>
+                                    <div className="text-8xl mb-4 flex justify-center text-brand-blue">{getProductIcon('financeapp')}</div>
                                     <div className="text-2xl font-display font-bold text-white">FinanceHub</div>
                                     <div className="text-white opacity-40 text-sm">Internal Prototype Phase</div>
                                 </div>
                                 <div className="space-y-3">
                                     {['Kernel Engine', 'Data Vault', 'Quantum Flow', 'Nexus Grid'].map((feat, i) => (
                                         <div key={feat} className="flex items-center gap-3 p-3 bg-white/5 rounded-xl">
-                                            <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-sm">
-                                                {['🏗️', '🗄️', '⚡', '🕸️'][i]}
+                                            <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-brand-blue text-sm">
+                                                {[<FiLayers />, <FiDatabase />, <FiZap />, <FiGlobe />][i]}
                                             </div>
                                             <span className="text-sm text-gray-300 italic">{feat} (Internal)</span>
                                             <div className="ml-auto w-2 h-2 rounded-full bg-white opacity-40 animate-pulse" />
