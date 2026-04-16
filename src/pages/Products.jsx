@@ -48,7 +48,9 @@ export default function Products() {
                                     <div className="inline-block px-3 py-1 rounded-full bg-white text-black text-xs font-bold mb-1">
                                         LIVE
                                     </div>
-                                    <h2 className="text-3xl font-display font-bold text-white">Bluelearnerhub</h2>
+                                    <a href="https://bluelearnerhub.com" target="_blank" rel="noopener noreferrer">
+                                        <h2 className="text-3xl font-display font-bold text-white hover:text-white/80 transition-colors inline-block">Bluelearnerhub</h2>
+                                    </a>
                                     <div className="text-white opacity-40 text-xs font-mono mt-1">FLAGSHIP SUBSIDIARY</div>
                                 </div>
                             </div>
@@ -88,8 +90,8 @@ export default function Products() {
                             </a>
                         </div>
 
-                        <div className="relative isometric-container">
-                            <div className="glassmorphism rounded-3xl border border-white/10 p-8 relative overflow-hidden isometric-card"
+                        <div className="relative">
+                            <div className="glassmorphism rounded-3xl border border-white/10 p-8 relative overflow-hidden"
                                 style={{ boxShadow: '0 0 60px rgba(255,255,255,0.05)' }}>
                                 <div className="absolute top-0 left-0 right-0 h-1 bg-white opacity-50" />
                                 <div className="text-center mb-6">
@@ -198,8 +200,8 @@ export default function Products() {
                             )}
                         </div>
 
-                        <div className="lg:order-1 relative isometric-container">
-                            <div className="glassmorphism rounded-3xl border border-white/10 p-8 relative overflow-hidden isometric-card"
+                        <div className="lg:order-1 relative">
+                            <div className="glassmorphism rounded-3xl border border-white/10 p-8 relative overflow-hidden"
                                 style={{ boxShadow: '0 0 60px rgba(255,255,255,0.03)' }}>
                                 <div className="absolute top-0 left-0 right-0 h-1 bg-white opacity-20" />
                                 <div className="absolute top-4 right-4 px-3 py-1.5 bg-white/10 border border-white/20 rounded-full text-white/60 text-xs font-bold">

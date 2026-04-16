@@ -426,10 +426,119 @@ export default function Admin() {
         setAuthenticated(false);
     };
 
+function BlogPostsSection() {
+    const [posts, setPosts] = useState(() => storage.getBlogPosts());
+    const [editing, setEditing] = useState(null);
+    const [form, setForm] = useState({ title: '', category: 'Technology', author: 'Admin', excerpt: '', content: '', tags: '' });
+    const [saved, setSaved] = useState(false);
+
+    const handleSave = (e) => {
+        e.preventDefault();
+        const postData = {
+            ...form,
+            id: editing || Date.now().toString(),
+            date: new Date().toISOString(),
+            readTime: Math.ceil((form.content?.length || 0) / 1000) + ' min',
+            tags: form.tags.split(',').map(t => t.trim()).filter(t => t)
+        };
+        storage.saveBlogPost(postData);
+        setPosts(storage.getBlogPosts());
+        setEditing(null);
+        setForm({ title: '', category: 'Technology', author: 'Admin', excerpt: '', content: '', tags: '' });
+        setSaved(true);
+        setTimeout(() => setSaved(false), 2000);
+    };
+
+    const handleEdit = (p) => {
+        setEditing(p.id);
+        setForm({ ...p, tags: p.tags.join(', ') });
+    };
+
+    const handleDelete = (id) => {
+        if (window.confirm('Delete this post?')) {
+            storage.deleteBlogPost(id);
+            setPosts(storage.getBlogPosts());
+        }
+    };
+
+    return (
+        <div>
+            <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-display font-bold text-white">Blog Management</h2>
+                <button 
+                    onClick={() => { setEditing('new'); setForm({ title: '', category: 'Technology', author: 'Admin', excerpt: '', content: '', tags: '' }); }}
+                    className="px-4 py-2 rounded-xl text-sm font-bold text-black bg-white hover:bg-gray-200"
+                >
+                    + Create New Post
+                </button>
+            </div>
+
+            {editing && (
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="glassmorphism rounded-2xl border border-white/20 p-6 mb-8">
+                    <h3 className="text-lg font-bold text-white mb-4">{editing === 'new' ? 'New Blog Post' : 'Edit Post'}</h3>
+                    <form onSubmit={handleSave} className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="text-xs text-gray-400 mb-1 block">Title</label>
+                                <input value={form.title} onChange={e => setForm({...form, title: e.target.value})} required className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm" />
+                            </div>
+                            <div>
+                                <label className="text-xs text-gray-400 mb-1 block">Category</label>
+                                <select value={form.category} onChange={e => setForm({...form, category: e.target.value})} className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm">
+                                    {['Technology', 'Engineering', 'Design', 'Mobile', 'Company', 'Security'].map(c => <option key={c} value={c} className="bg-brand-gray-800">{c}</option>)}
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label className="text-xs text-gray-400 mb-1 block">Excerpt</label>
+                            <textarea value={form.excerpt} onChange={e => setForm({...form, excerpt: e.target.value})} rows={2} required className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm resize-none" />
+                        </div>
+                        <div>
+                            <label className="text-xs text-gray-400 mb-1 block">Content (Markdown supported)</label>
+                            <textarea value={form.content} onChange={e => setForm({...form, content: e.target.value})} rows={10} required className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm resize-none" />
+                        </div>
+                        <div>
+                            <label className="text-xs text-gray-400 mb-1 block">Tags (comma separated)</label>
+                            <input value={form.tags} onChange={e => setForm({...form, tags: e.target.value})} placeholder="AI, Web3, Future" className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm" />
+                        </div>
+                        <div className="flex gap-3 pt-2">
+                            <button type="submit" className="px-6 py-2.5 rounded-xl text-sm font-bold text-black bg-white hover:bg-gray-200">{saved ? '✓ Saved' : 'Save Post'}</button>
+                            <button type="button" onClick={() => setEditing(null)} className="px-6 py-2.5 rounded-xl text-sm font-semibold text-gray-400 hover:text-white transition-all">Cancel</button>
+                        </div>
+                    </form>
+                </motion.div>
+            )}
+
+            <div className="space-y-3">
+                {posts.length === 0 ? (
+                    <div className="py-20 text-center text-gray-500 glassmorphism rounded-2xl border border-white/10">No posts created yet.</div>
+                ) : (
+                    posts.map(p => (
+                        <div key={p.id} className="glassmorphism rounded-2xl border border-white/10 p-5 flex items-center justify-between group">
+                            <div className="flex-1">
+                                <div className="flex items-center gap-2 mb-1">
+                                    <span className="text-xs px-2 py-0.5 rounded-md bg-white/10 text-white opacity-50">{p.category}</span>
+                                    <span className="text-xs text-gray-600">{new Date(p.date).toLocaleDateString()}</span>
+                                </div>
+                                <h4 className="font-semibold text-white group-hover:text-gray-200 transition-colors">{p.title}</h4>
+                            </div>
+                            <div className="flex gap-2">
+                                <button onClick={() => handleEdit(p)} className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-all" title="Edit">✏️</button>
+                                <button onClick={() => handleDelete(p.id)} className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-red-400 transition-all" title="Delete">🗑️</button>
+                            </div>
+                        </div>
+                    ))
+                )}
+            </div>
+        </div>
+    );
+}
+
     const renderContent = () => {
         switch (activeSection) {
             case 'dashboard': return <DashboardSection />;
             case 'content': return <ContentEditor />;
+            case 'blog': return <BlogPostsSection />;
             case 'applications': return <ApplicationsSection />;
             case 'subscribers': return <SubscribersSection />;
             case 'ace': return <AceSection />;

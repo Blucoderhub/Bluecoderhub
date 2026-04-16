@@ -4,6 +4,9 @@ import { motion } from 'framer-motion';
 import FadeInSection from '../components/animations/FadeInSection';
 import LiquidBlob from '../components/animations/LiquidBlob';
 import blog from '../data/blog.json';
+import { storage } from '../utils/storage';
+
+const allPosts = [...blog, ...(storage.getBlogPosts() || [])].sort((a, b) => new Date(b.date) - new Date(a.date));
 
 const categories = ['All', 'Technology', 'Engineering', 'Design', 'Mobile', 'Company', 'Security'];
 const categoryIcons = { Technology: '🤖', Engineering: '⚙️', Design: '🎨', Mobile: '📱', Company: '🏢', Security: '🔒' };
@@ -55,7 +58,7 @@ function BlogCard({ post, index }) {
 export function BlogPost() {
     const { postId } = useParams();
     const navigate = useNavigate();
-    const post = blog.find(p => p.id === postId);
+    const post = allPosts.find(p => p.id === postId);
 
     if (!post) return (
         <div className="min-h-screen pt-32 text-center text-gray-400">
@@ -64,7 +67,7 @@ export function BlogPost() {
         </div>
     );
 
-    const related = blog.filter(p => p.id !== post.id && p.category === post.category).slice(0, 3);
+    const related = allPosts.filter(p => p.id !== post.id && p.category === post.category).slice(0, 3);
 
     return (
         <div className="min-h-screen pt-28 pb-20">
@@ -117,7 +120,7 @@ export default function Blog() {
     const [category, setCategory] = useState('All');
     const [search, setSearch] = useState('');
 
-    const filtered = useMemo(() => blog.filter(p => {
+    const filtered = useMemo(() => allPosts.filter(p => {
         const matchCat = category === 'All' || p.category === category;
         const q = search.toLowerCase();
         return matchCat && (!q || p.title.toLowerCase().includes(q) || p.tags.some(t => t.toLowerCase().includes(q)));

@@ -63,11 +63,11 @@ export default function Home() {
             });
         }
 
-        // 3. Products section — cards stagger in with a 3D tilt pop
+        // 3. Products section — cards stagger in with a smooth fade up
         if (productsSectionRef.current) {
             gsap.fromTo(
                 productsSectionRef.current.querySelectorAll('.st-card'),
-                { opacity: 0, y: 60, rotateX: 15, transformOrigin: 'top center' },
+                { opacity: 0, y: 60 },
                 {
                     opacity: 1,
                     y: 0,
@@ -269,11 +269,11 @@ export default function Home() {
                     </div>
                 </FadeInSection>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 isometric-container">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {products.map((product, i) => (
                         <div key={product.id} className="st-card">
                             <motion.div
-                                className="relative group glassmorphism rounded-2xl border border-white/10 p-6 isometric-card cursor-pointer h-full"
+                                className="relative group glassmorphism rounded-2xl border border-white/10 p-6 cursor-pointer h-full"
                                 style={{
                                     background: product.status === 'live'
                                         ? 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(0,0,0,1) 100%)'
@@ -294,7 +294,13 @@ export default function Home() {
                                 )}
 
                                 <div className="text-4xl mb-4">{product.icon}</div>
-                                <h3 className="font-display font-bold text-white text-xl mb-2">{product.name}</h3>
+                                {product.status === 'live' && sanitizeURL(product.url) ? (
+                                    <a href={sanitizeURL(product.url)} target="_blank" rel="noopener noreferrer">
+                                        <h3 className="font-display font-bold text-white text-xl mb-2 hover:text-white/80 transition-colors inline-block">{product.name}</h3>
+                                    </a>
+                                ) : (
+                                    <h3 className="font-display font-bold text-white text-xl mb-2">{product.name}</h3>
+                                )}
                                 <p className="text-white opacity-60 text-sm font-medium mb-3">{product.tagline}</p>
                                 <p className="text-gray-400 text-sm leading-relaxed mb-4">{product.description}</p>
 

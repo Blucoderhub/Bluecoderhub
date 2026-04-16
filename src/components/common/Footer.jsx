@@ -20,14 +20,6 @@ const footerLinks = {
         { label: 'Get a Quote', path: '/contact' },
     ],
 };
-
-const socialLinks = [
-    { label: 'LinkedIn', icon: '💼', url: 'https://linkedin.com/company/bluecoderhub' },
-    { label: 'GitHub', icon: '🐙', url: 'https://github.com/Blucoderhub' },
-    { label: 'Twitter', icon: '🐦', url: 'https://twitter.com/bluecoderhub' },
-    { label: 'Instagram', icon: '📸', url: 'https://instagram.com/bluecoderhub' },
-];
-
 import Logo from './Logo';
 
 export default function Footer() {
@@ -35,7 +27,7 @@ export default function Footer() {
         <footer className="bg-brand-gray-900 border-t border-white/5">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 
-                {/* Top: Logo + Description + Social */}
+                {/* Top: Logo + Description */}
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-12">
                     <div className="lg:col-span-1">
                         <Link to="/" className="flex items-center gap-3 mb-4">
@@ -49,22 +41,10 @@ export default function Footer() {
                         </Link>
                         <p className="text-gray-400 text-sm leading-relaxed mb-6">
                             The strategic parent company powering a global ecosystem of innovation,
-                            including our flagship subsidiary, Bluelearnerhub.
+                            including our flagship subsidiary, <a href="https://bluelearnerhub.com" target="_blank" rel="noopener noreferrer" className="text-white hover:underline underline-offset-4 decoration-white/20">Bluelearnerhub</a>.
                         </p>
                         <div className="flex gap-3">
-                            {socialLinks.map(s => (
-                                <motion.a
-                                    key={s.label}
-                                    href={sanitizeURL(s.url)}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    whileHover={{ scale: 1.2, rotate: 5 }}
-                                    className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-base hover:border-white/50 hover:bg-white/10 transition-all"
-                                    aria-label={s.label}
-                                >
-                                    {s.icon}
-                                </motion.a>
-                            ))}
+                            {/* Social links removed */}
                         </div>
                     </div>
 

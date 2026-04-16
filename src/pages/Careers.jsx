@@ -74,8 +74,8 @@ export default function Careers() {
                         </div>
                     </FadeInSection>
                     <FadeInSection direction="left">
-                        <div className="isometric-container h-full">
-                            <div className="glassmorphism rounded-3xl border border-white/10 p-8 h-full flex items-center justify-center isometric-card" style={{ boxShadow: '0 0 60px rgba(255,255,255,0.05)' }}>
+                        <div className="h-full">
+                            <div className="glassmorphism rounded-3xl border border-white/10 p-8 h-full flex items-center justify-center" style={{ boxShadow: '0 0 60px rgba(255,255,255,0.05)' }}>
                                 <div className="text-center">
                                     <div className="text-5xl mb-4">🌍</div>
                                     <h3 className="text-xl font-display font-bold text-white mb-2">Global Impact</h3>

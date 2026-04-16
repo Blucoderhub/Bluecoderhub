@@ -188,6 +188,18 @@ export function getSubscribers() {
     return getFromStorage('subscribers') || [];
 }
 
+export function getBlogPosts() {
+    return getFromStorage('blog_posts') || [];
+}
+
+export function saveBlogPost(postData) {
+    return saveToStorage('blog_posts', postData);
+}
+
+export function deleteBlogPost(id) {
+    return deleteFromStorage('blog_posts', id);
+}
+
 // ─── Convenience namespace object ─────────────────────────────────────
 
 export const storage = {
@@ -209,4 +221,7 @@ export const storage = {
     getApplications,
     addSubscriber,
     getSubscribers,
+    saveBlogPost,
+    getBlogPosts,
+    deleteBlogPost,
 };

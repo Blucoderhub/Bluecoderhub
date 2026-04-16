@@ -88,12 +88,12 @@ export default function Ace() {
                         </p>
                     </div>
                 </FadeInSection>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 isometric-container">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {features.map((f, i) => (
                         <FadeInSection key={f.title} delay={i * 0.1}>
                             <motion.div
                                 whileHover={{ y: -8, boxShadow: `0 20px 60px ${f.color}20` }}
-                                className="glassmorphism rounded-2xl border border-white/10 p-6 group cursor-pointer isometric-card"
+                                className="glassmorphism rounded-2xl border border-white/10 p-6 group cursor-pointer"
                             >
                                 <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform"
                                     style={{ background: `${f.color}15`, border: `1px solid ${f.color}30` }}>
@@ -177,11 +177,11 @@ export default function Ace() {
                         </h2>
                     </div>
                 </FadeInSection>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 isometric-container">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {useCases.map((u, i) => (
                         <FadeInSection key={u.title} delay={i * 0.08}>
                             <motion.div whileHover={{ scale: 1.04 }}
-                                className="glassmorphism rounded-2xl border border-white/10 p-5 isometric-card">
+                                className="glassmorphism rounded-2xl border border-white/10 p-5">
                                 <div className="text-3xl mb-3">{u.icon}</div>
                                 <h3 className="font-semibold text-white text-sm mb-1">{u.title}</h3>
                                 <p className="text-gray-500 text-xs leading-relaxed">{u.desc}</p>
