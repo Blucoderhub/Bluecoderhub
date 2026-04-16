@@ -20,7 +20,7 @@ export default {
                 'brand-error': '#444444',
             },
             fontFamily: {
-                display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+                display: ['Outfit', 'system-ui', 'sans-serif'],
                 body: ['Inter', 'system-ui', 'sans-serif'],
                 mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
             },

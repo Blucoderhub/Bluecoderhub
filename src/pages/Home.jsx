@@ -31,7 +31,7 @@ export default function Home() {
                         <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/60 text-xs font-mono mb-6 uppercase tracking-widest">
                             Established Excellence
                         </span>
-                        <h1 className="text-7xl lg:text-8xl font-serif font-bold text-white mb-6 leading-[0.9] tracking-tight">
+                        <h1 className="text-7xl lg:text-8xl font-display font-bold text-white mb-6 leading-[0.9] tracking-tight">
                             Engineering <br />
                             <span className="italic text-gray-400">Digital Trust.</span>
                         </h1>
@@ -59,7 +59,7 @@ export default function Home() {
                         <div className="flex items-center gap-1 mb-4">
                             {[1, 2, 3, 4, 5].map(i => <span key={i} className="text-white text-lg">★</span>)}
                         </div>
-                        <blockquote className="text-lg font-serif italic text-white/90 mb-6">
+                        <blockquote className="text-lg font-display italic text-white/90 mb-6">
                             "At Bluecoderhub, we don't just build software; we build the digital nervous systems 
                             that allow enterprises to thrive in an era of rapid disruption."
                         </blockquote>
@@ -82,7 +82,7 @@ export default function Home() {
                     <div className="flex flex-col lg:flex-row justify-between items-end mb-20 gap-8">
                         <div className="max-w-2xl">
                             <span className="text-accent-cyan font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Product Ecosystem</span>
-                            <h2 className="text-5xl lg:text-6xl font-serif font-bold mb-6">Built for Purpose, <br />Scalable by Design.</h2>
+                            <h2 className="text-5xl lg:text-6xl font-display font-bold mb-6">Built for Purpose, <br />Scalable by Design.</h2>
                             <p className="text-lg text-gray-600">
                                 We limit our focus to three core industries to ensure absolute mastery. 
                                 Explore our specialized software tiers.
@@ -101,7 +101,7 @@ export default function Home() {
                                 className="group"
                             >
                                 <div className="text-6xl mb-8 group-hover:scale-110 transition-transform duration-500 origin-left">{p.icon}</div>
-                                <h3 className="text-2xl font-serif font-bold mb-3">{p.name}</h3>
+                                <h3 className="text-2xl font-display font-bold mb-3">{p.name}</h3>
                                 <p className="text-gray-500 mb-6 line-clamp-3 leading-relaxed">
                                     {p.description}
                                 </p>
@@ -143,7 +143,7 @@ export default function Home() {
 
                         <div className="order-1 lg:order-2">
                             <span className="text-white/40 font-mono text-xs mb-4 block">Infrastructure & Security</span>
-                            <h2 className="text-4xl font-serif font-bold text-white mb-6">The Granite Foundation <br />of Your Data.</h2>
+                            <h2 className="text-4xl font-display font-bold text-white mb-6">The Granite Foundation <br />of Your Data.</h2>
                             <p className="text-gray-400 mb-10 leading-relaxed font-light">
                                 Our data layer is engineered for zero-failure performance. We utilize 
                                 redundant distributed architectures that safeguard your most critical 
@@ -165,7 +165,7 @@ export default function Home() {
             {/* Final CTA / Urgency Layer */}
             <section className="py-24 section-light text-center border-t border-black/5">
                 <div className="max-w-3xl mx-auto px-6">
-                    <h2 className="text-4xl font-serif font-bold mb-6">Ready to Engineer the Future?</h2>
+                    <h2 className="text-4xl font-display font-bold mb-6">Ready to Engineer the Future?</h2>
                     <p className="text-lg text-gray-600 mb-10">
                         We only accept two new enterprise partnerships per quarter to maintain our standards. 
                         <strong> Current availability: 1 slot remaining for Q2 2026.</strong>
