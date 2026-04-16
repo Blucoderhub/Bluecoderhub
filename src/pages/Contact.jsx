@@ -9,8 +9,8 @@ import { storage } from '../utils/storage';
 
 const contactMethods = [
     { icon: '📧', title: 'Email Us', value: 'connect@bluecoderhub.com', href: 'mailto:connect@bluecoderhub.com', desc: 'For general enquiries and partnerships' },
-    { icon: '💼', title: 'Work With Us', value: 'careers@bluecoderhub.com', href: 'mailto:careers@bluecoderhub.com', desc: 'For career and job opportunities' },
-    { icon: '🐛', title: 'Support', value: 'support@bluecoderhub.com', href: 'mailto:support@bluecoderhub.com', desc: 'Technical support & bug reports' },
+    { icon: '💼', title: 'Work With Us', value: 'connect@bluecoderhub.com', href: 'mailto:connect@bluecoderhub.com', desc: 'For career and job opportunities' },
+    { icon: '🐛', title: 'Support', value: 'connect@bluecoderhub.com', href: 'mailto:connect@bluecoderhub.com', desc: 'Technical support & bug reports' },
     { icon: '📍', title: 'Location', value: 'Chennai, Tamil Nadu, India', href: '#', desc: 'Remote-first team, global reach' },
 ];
 
