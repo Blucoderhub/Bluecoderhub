@@ -65,9 +65,6 @@ export default function Ace() {
                             No developers needed. Just tell ACE what you want.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="/admin" className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl text-base font-bold text-black bg-white hover:bg-gray-200 transition-all">
-                                Try ACE Now →
-                            </a>
                             <a href="#demo" className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl text-base font-semibold text-white border border-white/20 hover:bg-white/5 transition-all">
                                 See Demo ↓
                             </a>

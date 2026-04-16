@@ -7,7 +7,6 @@ const footerLinks = {
         { label: 'About Us', path: '/about' },
         { label: 'Careers', path: '/careers' },
         { label: 'Blog', path: '/blog' },
-        { label: 'Contact', path: '/contact' },
     ],
     Products: [
         { label: 'Bluelearnerhub', external: 'https://bluelearnerhub.com' },
@@ -17,7 +16,6 @@ const footerLinks = {
     Platform: [
         { label: 'ACE AI Engine', path: '/ace' },
         { label: 'Admin CMS', path: '/admin' },
-        { label: 'Get a Quote', path: '/contact' },
     ],
 };
 import Logo from './Logo';

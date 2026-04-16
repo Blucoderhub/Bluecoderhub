@@ -30,6 +30,11 @@ html {
 
 body {
   background-color: var(--color-black);
+  background-image: 
+    radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.01) 0%, transparent 60%);
+  background-attachment: fixed;
   color: var(--color-text-primary);
   font-family: var(--font-body);
   line-height: 1.6;
@@ -38,44 +43,72 @@ body {
 }
 
 .section-light {
-  background-color: var(--color-white);
+  background-color: #f8fafc;
+  background-image: radial-gradient(circle at 100% 0%, rgba(59, 130, 246, 0.05) 0%, transparent 30%);
   color: var(--color-text-dark);
 }
 
 .section-light .text-gray-400 {
-  color: #6e6e73;
+  color: #64748b;
 }
 
 .section-light h2 {
-  color: var(--color-text-dark);
+  color: #0f172a;
 }
 
 .section-dark {
-  background-color: var(--color-black);
+  background-color: transparent;
+  background-image: radial-gradient(circle at 50% 0%, #0c1421 0%, #050505 100%);
   color: var(--color-text-primary);
+}
+
+/* Background Glows */
+.bg-glow-top {
+  position: fixed;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 50vh;
+  background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.bg-glow-bottom {
+  position: fixed;
+  bottom: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 50vh;
+  background: radial-gradient(circle at 50% 100%, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-gray-900);
+  background: #050505;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-primary-teal);
-  border-radius: 3px;
+  background: #1e293b;
+  border-radius: 4px;
+  border: 2px solid #050505;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent-cyan);
+  background: #3b82f6;
 }
 
 /* Selection */
 ::selection {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(59, 130, 246, 0.2);
   color: #fff;
 }
 
@@ -88,48 +121,43 @@ h5,
 h6 {
   font-family: var(--font-display);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
 /* Glow Utilities */
 @layer utilities {
-  .text-glow-cyan {
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.2);
+  .text-glow-blue {
+    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5), 0 0 40px rgba(59, 130, 246, 0.2);
   }
 
-  .text-glow-teal {
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-  }
-
-  .border-glow-cyan {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.05);
-  }
-
-  .border-glow-teal {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  .border-glow-blue {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.1), inset 0 0 20px rgba(59, 130, 246, 0.05);
   }
 
   .glassmorphism {
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(5, 5, 5, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, #ffffff 0%, #666666 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #3b82f6 50%, #1d4ed8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .card-hover {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .card-hover:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 60px rgba(255, 255, 255, 0.1);
+    transform: translateY(-12px);
+    box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.3);
   }
 
   .btn-shine {
@@ -144,8 +172,8 @@ h6 {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.5s;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease-in-out;
   }
 
   .btn-shine:hover::before {

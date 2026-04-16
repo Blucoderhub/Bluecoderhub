@@ -19,7 +19,8 @@ export default function Home() {
                         alt="Expert Engineering Team"
                         className="w-full h-full object-cover opacity-40 grayscale-[20%]"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(59,130,246,0.1)_0%,transparent_50%)]" />
                 </div>
 
                 <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
@@ -40,12 +41,6 @@ export default function Home() {
                             sustainable digital growth for global leaders.
                         </p>
                         <div className="flex flex-wrap gap-4">
-                            <Button href="/products" size="xl" className="font-bold">
-                                View Ecosystem
-                            </Button>
-                            <Button href="/contact" size="xl" variant="secondary">
-                                Partner With Us
-                            </Button>
                         </div>
                     </motion.div>
 
@@ -171,8 +166,6 @@ export default function Home() {
                         <strong> Current availability: 1 slot remaining for Q2 2026.</strong>
                     </p>
                     <div className="flex justify-center flex-col sm:flex-row gap-4">
-                        <Button href="/contact" size="xl">Request Consultation</Button>
-                        <Button href="/careers" size="xl" variant="secondary">Join the Engineers</Button>
                     </div>
                 </div>
             </section>

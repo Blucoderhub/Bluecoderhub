@@ -11,7 +11,6 @@ import About from './pages/About';
 import Careers from './pages/Careers';
 import Ace from './pages/Ace';
 import Blog, { BlogPost } from './pages/Blog';
-import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 import { ROUTES } from './config/routes';
 import { PAGE_TRANSITION } from './config/constants';
@@ -54,7 +53,10 @@ function AppRoutes() {
     const isAdmin = location.pathname.startsWith('/admin');
 
     return (
-        <>
+        <div className="relative min-h-screen">
+            <div className="bg-glow-top" />
+            <div className="bg-glow-bottom" />
+            <div className="noise-overlay" />
             {!isAdmin && <Navbar />}
             <AnimatePresence mode="wait">
                 <Routes location={location} key={location.pathname}>
@@ -65,13 +67,12 @@ function AppRoutes() {
                     <Route path={ROUTES.ACE} element={<PageWrapper><Ace /></PageWrapper>} />
                     <Route path={ROUTES.BLOG} element={<PageWrapper><Blog /></PageWrapper>} />
                     <Route path="/blog/:postId" element={<PageWrapper><BlogPost /></PageWrapper>} />
-                    <Route path={ROUTES.CONTACT} element={<PageWrapper><Contact /></PageWrapper>} />
                     <Route path={ROUTES.ADMIN} element={<Admin />} />
                     <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
                 </Routes>
             </AnimatePresence>
             {!isAdmin && <Footer />}
-        </>
+        </div>
     );
 }
 

@@ -15,7 +15,6 @@ const navLinks = [
     { label: 'Careers', path: '/careers' },
     { label: 'ACE', path: '/ace' },
     { label: 'Blog', path: '/blog' },
-    { label: 'Contact', path: '/contact' },
 ];
 
 import Logo from './Logo';
@@ -116,14 +115,8 @@ export default function Navbar() {
                         ))}
                     </div>
 
-                    {/* CTA + Mobile Toggle */}
                     <div className="flex items-center gap-3">
-                        <Link
-                            to="/contact"
-                            className="hidden sm:flex btn-shine items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-black bg-white hover:bg-gray-100 hover:shadow-[0_15px_30px_rgba(255,255,255,0.2)] transition-all duration-300"
-                        >
-                            Get Started
-                        </Link>
+
                         <button
                             onClick={() => setMobileOpen(!mobileOpen)}
                             className="lg:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-all"
@@ -196,16 +189,9 @@ export default function Navbar() {
                                     )}
                                 </div>
                             ))}
-                            <div className="pt-3 border-t border-white/10">
-                                <Link
-                                    to="/contact"
-                                    className="flex items-center justify-center px-4 py-3 rounded-xl text-sm font-semibold text-black bg-white"
-                                >
-                                    Get Started →
-                                </Link>
-                            </div>
                         </div>
                     </motion.div>
+
                 )}
             </AnimatePresence>
         </motion.header>
