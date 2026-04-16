@@ -60,14 +60,14 @@ export default function Home() {
                             {[1, 2, 3, 4, 5].map(i => <span key={i} className="text-white text-lg">★</span>)}
                         </div>
                         <blockquote className="text-lg font-serif italic text-white/90 mb-6">
-                            "The team at Bluecoderhub didn't just meet our requirements; they anticipated our 
-                            future scale before we even knew we'd need it."
+                            "At Bluecoderhub, we don't just build software; we build the digital nervous systems 
+                            that allow enterprises to thrive in an era of rapid disruption."
                         </blockquote>
                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-white/10 border border-white/20" />
+                            <div className="w-12 h-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-xl">👤</div>
                             <div>
-                                <div className="text-sm font-bold text-white">James McAvoy</div>
-                                <div className="text-xs text-gray-400">CTO, Global Logistics Corp</div>
+                                <div className="text-sm font-bold text-white">Shankar R</div>
+                                <div className="text-xs text-gray-400">CEO, Bluecoderhub PVT LTD</div>
                             </div>
                         </div>
                     </motion.div>
