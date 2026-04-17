@@ -8,6 +8,8 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import { env } from './config/env.js';
 import { generalLimiter } from './middleware/rateLimits.js';
+import { requestId, requestLogger } from './middleware/requestId.js';
+import { securityHeaders } from './middleware/security.js';
 import { errorHandler, notFound } from './utils/errors.js';
 import authRoutes from './routes/auth.js';
 import blogRoutes from './routes/blogs.js';
@@ -22,6 +24,10 @@ export function createApp({ serveFrontend = false } = {}) {
 
   app.set('trust proxy', 1);
   app.disable('x-powered-by');
+
+  app.use(requestId);
+  app.use(requestLogger);
+  app.use(securityHeaders);
 
   app.use(helmet({
     contentSecurityPolicy: {
@@ -38,7 +44,13 @@ export function createApp({ serveFrontend = false } = {}) {
         upgradeInsecureRequests: []
       }
     },
-    crossOriginEmbedderPolicy: false
+    crossOriginEmbedderPolicy: false,
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+    hsts: {
+      maxAge: 31536000,
+      includeSubDomains: true,
+      preload: true
+    }
   }));
 
   app.use(cors({

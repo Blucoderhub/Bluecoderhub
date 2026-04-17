@@ -3,6 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import FadeInSection from '../components/animations/FadeInSection';
 import { api } from '../utils/api';
+import { sanitizeLongText } from '../utils/sanitize';
 
 function formatDate(value) {
     return new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -84,7 +85,7 @@ export function BlogPost() {
 
                 <article className="prose prose-invert prose-lg max-w-none">
                     <div className="text-gray-300 leading-relaxed space-y-8 whitespace-pre-wrap">
-                        {post.content}
+                        {sanitizeBlogContent(post.content)}
                     </div>
                 </article>
 

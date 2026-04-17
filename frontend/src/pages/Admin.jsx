@@ -266,7 +266,11 @@ export default function Admin() {
     if (checking) return <div className="min-h-screen bg-black text-white flex items-center justify-center">Checking session...</div>;
     if (!user) return <LoginScreen onLogin={setUser} />;
 
-    const logout = () => {
+    const logout = async () => {
+        try {
+            await api.logout();
+        } catch (e) {
+        }
         clearAuthToken();
         setUser(null);
     };

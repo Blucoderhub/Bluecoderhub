@@ -8,9 +8,18 @@ import { HttpError } from '../utils/errors.js';
 
 const router = Router();
 
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+function validateIdParam(id) {
+  if (!UUID_REGEX.test(id)) {
+    throw new HttpError(400, 'Invalid ID', 'validation_error');
+  }
+  return id;
+}
+
 const subscriberSchema = z.object({
   email: z.string().email().max(254).transform((v) => v.toLowerCase()),
-  source: z.string().trim().min(2).max(80).default('footer')
+  source: z.string().trim().min(2).max(80).regex(/^[a-zA-Z0-9_-]+$/, 'Invalid source format').default('footer')
 });
 
 router.post('/', writeLimiter, validate(subscriberSchema), async (req, res, next) => {
@@ -44,7 +53,8 @@ router.get('/', authenticate, requireRole('admin'), async (_req, res, next) => {
 
 router.delete('/:id', authenticate, requireRole('admin'), writeLimiter, async (req, res, next) => {
   try {
-    const result = await query('DELETE FROM subscribers WHERE id = $1 RETURNING id', [req.params.id]);
+    const validatedId = validateIdParam(req.params.id);
+    const result = await query('DELETE FROM subscribers WHERE id = $1 RETURNING id', [validatedId]);
     if (result.rowCount !== 1) throw new HttpError(404, 'Subscriber not found', 'not_found');
     res.status(204).end();
   } catch (err) {

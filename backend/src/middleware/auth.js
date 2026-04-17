@@ -16,9 +16,14 @@ export function signToken(user) {
 
 export async function authenticate(req, _res, next) {
   try {
-    const header = req.headers.authorization || '';
-    const [scheme, token] = header.split(' ');
-    if (scheme !== 'Bearer' || !token) {
+    let token = null;
+
+    const cookieToken = req.cookies?.auth_token;
+    const headerToken = req.headers.authorization?.split(' ')[1];
+
+    token = cookieToken || headerToken;
+
+    if (!token) {
       throw new HttpError(401, 'Authentication required', 'auth_required');
     }
 
@@ -39,7 +44,11 @@ export async function authenticate(req, _res, next) {
       next(err);
       return;
     }
-    next(new HttpError(401, 'Invalid or expired token', 'invalid_token'));
+    if (err.name === 'JsonWebTokenError' || err.name === 'TokenExpiredError') {
+      next(new HttpError(401, 'Invalid or expired token', 'invalid_token'));
+      return;
+    }
+    next(new HttpError(401, 'Authentication failed', 'auth_failed'));
   }
 }
 

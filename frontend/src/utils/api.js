@@ -20,11 +20,16 @@ async function request(path, options = {}) {
   const token = getAuthToken();
   if (token) headers.Authorization = `Bearer ${token}`;
 
-  const response = await fetch(path, { ...options, headers });
+  const response = await fetch(path, { 
+    ...options, 
+    headers,
+    credentials: 'include'
+  });
   if (response.status === 204) return null;
 
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {
+    if (response.status === 401) clearAuthToken();
     const error = new Error(data.error || 'Request failed');
     error.status = response.status;
     error.code = data.code;
@@ -38,6 +43,7 @@ export const api = {
     method: 'POST',
     body: JSON.stringify({ email, password })
   }),
+  logout: () => request('/api/auth/logout', { method: 'POST' }),
   me: () => request('/api/auth/me'),
   listBlogs: () => request('/api/blogs'),
   listAdminBlogs: () => request('/api/blogs/admin'),

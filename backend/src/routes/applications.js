@@ -8,6 +8,15 @@ import { HttpError } from '../utils/errors.js';
 
 const router = Router();
 
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+function validateIdParam(id) {
+  if (!UUID_REGEX.test(id)) {
+    throw new HttpError(400, 'Invalid ID', 'validation_error');
+  }
+  return id;
+}
+
 const applicationSchema = z.object({
   name: z.string().trim().min(2).max(120),
   email: z.string().email().max(254).transform((v) => v.toLowerCase()),
@@ -58,11 +67,12 @@ router.get('/', authenticate, requireRole('admin'), async (_req, res, next) => {
 
 router.patch('/:id/status', authenticate, requireRole('admin'), writeLimiter, validate(statusSchema), async (req, res, next) => {
   try {
+    const validatedId = validateIdParam(req.params.id);
     const result = await query(
       `UPDATE applications SET status = $1, updated_at = NOW()
        WHERE id = $2
        RETURNING id, name, email, phone, position, portfolio_url, cover_letter, status, created_at, updated_at`,
-      [req.validated.body.status, req.params.id]
+      [req.validated.body.status, validatedId]
     );
     if (result.rowCount !== 1) throw new HttpError(404, 'Application not found', 'not_found');
     res.json({ application: result.rows[0] });
