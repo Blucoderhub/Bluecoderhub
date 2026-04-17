@@ -4,6 +4,8 @@ import FadeInSection from '../components/animations/FadeInSection';
 import LiquidBlob from '../components/animations/LiquidBlob';
 import ParticleSystem from '../components/animations/ParticleSystem';
 import { FiZap, FiUsers, FiBookOpen, FiSun, FiGlobe } from 'react-icons/fi';
+import jobs from '../data/jobs.json';
+import { api } from '../utils/api';
 
 const cultureSlides = [
     { title: 'Innovation First', desc: 'We believe in pushing boundaries and embracing new technologies. Every project is a chance to innovate.', icon: <FiZap /> },
@@ -16,6 +18,15 @@ const cultureSlides = [
 
 export default function Careers() {
     const [cultureSlide, setCultureSlide] = useState(0);
+    const [form, setForm] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        position: jobs[0]?.title || '',
+        portfolioUrl: '',
+        coverLetter: ''
+    });
+    const [submitState, setSubmitState] = useState({ loading: false, message: '', error: '' });
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -23,6 +34,25 @@ export default function Careers() {
         }, 5000);
         return () => clearInterval(timer);
     }, []);
+
+    const handleApplication = async (event) => {
+        event.preventDefault();
+        setSubmitState({ loading: true, message: '', error: '' });
+        try {
+            await api.createApplication(form);
+            setForm({
+                name: '',
+                email: '',
+                phone: '',
+                position: jobs[0]?.title || '',
+                portfolioUrl: '',
+                coverLetter: ''
+            });
+            setSubmitState({ loading: false, message: 'Application submitted.', error: '' });
+        } catch (err) {
+            setSubmitState({ loading: false, message: '', error: err.message || 'Submission failed.' });
+        }
+    };
 
 
     return (
@@ -119,6 +149,31 @@ export default function Careers() {
                 </div>
             </section>
 
+            <section className="max-w-5xl mx-auto px-4 py-20">
+                <FadeInSection>
+                    <div className="text-center mb-10">
+                        <h2 className="text-3xl font-display font-bold text-white mb-3">Apply Now</h2>
+                        <p className="text-gray-400">Applications are stored securely on the server and reviewed by admins.</p>
+                    </div>
+                </FadeInSection>
+                <form onSubmit={handleApplication} className="glassmorphism rounded-2xl border border-white/10 p-6 space-y-4">
+                    <div className="grid md:grid-cols-2 gap-4">
+                        <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Full name" required className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm" />
+                        <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="Email" required className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm" />
+                        <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="Phone (optional)" className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm" />
+                        <select value={form.position} onChange={(e) => setForm({ ...form, position: e.target.value })} required className="px-4 py-3 rounded-xl bg-black border border-white/10 text-white text-sm">
+                            {jobs.map((job) => <option key={job.id} value={job.title}>{job.title}</option>)}
+                        </select>
+                    </div>
+                    <input type="url" value={form.portfolioUrl} onChange={(e) => setForm({ ...form, portfolioUrl: e.target.value })} placeholder="Portfolio or LinkedIn URL (optional)" className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm" />
+                    <textarea value={form.coverLetter} onChange={(e) => setForm({ ...form, coverLetter: e.target.value })} placeholder="Tell us why this role fits you" rows={5} required className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm" />
+                    {submitState.error && <p className="text-sm text-red-400">{submitState.error}</p>}
+                    {submitState.message && <p className="text-sm text-green-400">{submitState.message}</p>}
+                    <button disabled={submitState.loading} className="px-6 py-3 rounded-xl text-sm font-bold text-black bg-white disabled:opacity-50">
+                        {submitState.loading ? 'Submitting...' : 'Submit Application'}
+                    </button>
+                </form>
+            </section>
 
 
         </div>

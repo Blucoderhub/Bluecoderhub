@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { sanitizeURL } from '../../security/sanitize';
+import { api } from '../../utils/api';
 
 const footerLinks = {
     Company: [
@@ -14,13 +14,24 @@ const footerLinks = {
         { label: 'TeamFlow (Planned)', path: '/products' },
     ],
     Platform: [
-        { label: 'ACE AI Engine', path: '/ace' },
         { label: 'Admin CMS', path: '/admin' },
     ],
 };
 import Logo from './Logo';
 
 export default function Footer() {
+    const handleSubscribe = async (event) => {
+        event.preventDefault();
+        const form = new FormData(event.currentTarget);
+        try {
+            await api.subscribe(String(form.get('email') || ''), 'footer');
+            event.currentTarget.reset();
+            alert('Subscribed.');
+        } catch (err) {
+            alert(err.message || 'Subscription failed.');
+        }
+    };
+
     return (
         <footer className="bg-brand-gray-900 border-t border-white/5">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -85,8 +96,9 @@ export default function Footer() {
                         <h3 className="font-display font-semibold text-white mb-1">Stay in the loop</h3>
                         <p className="text-gray-400 text-sm">Get the latest updates on our products and tech insights.</p>
                     </div>
-                    <form className="flex gap-2 w-full sm:w-auto" onSubmit={e => { e.preventDefault(); alert('Subscribed! ✨'); }}>
+                    <form className="flex gap-2 w-full sm:w-auto" onSubmit={handleSubscribe}>
                         <input
+                            name="email"
                             type="email"
                             placeholder="your@email.com"
                             required

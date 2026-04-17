@@ -1,11 +1,10 @@
 /**
  * SECURITY — Input Sanitization Module
- * Prevents XSS, prompt injection, and path traversal attacks.
+ * Prevents XSS-oriented payloads and path traversal attacks.
  *
  * NOTE: React JSX auto-escapes all values rendered as text nodes.
- * These functions are primarily used to sanitize inputs before:
- *   1. Injecting into AI prompts (prompt injection prevention)
- *   2. Any non-JSX HTML context (e.g. innerHTML)
+ * These functions are primarily used before any non-JSX HTML context
+ * such as innerHTML. Prefer React text rendering whenever possible.
  */
 
 const MAX_INPUT_LENGTH = 5000;
@@ -30,7 +29,7 @@ function decodeEntities(str) {
 
 /**
  * Strip HTML/script tags, dangerous protocols, event handlers, and limit string length.
- * Safe for use before storing or injecting into AI prompts.
+ * Safe for normalizing user-controlled text before storage or display.
  */
 export function sanitizeInput(value, maxLength = MAX_SHORT_LENGTH) {
     if (value === null || value === undefined) return '';
@@ -120,11 +119,11 @@ export function escapeHTML(str) {
 
 /**
  * Strip all non-printable / control characters from a string.
- * Used before injecting user input into AI prompts.
+ * Used before sending user-controlled text to sensitive processors.
  */
 export function sanitizeForPrompt(value, maxLength = MAX_SHORT_LENGTH) {
     const sanitized = sanitizeInput(value, maxLength);
-    // Remove control characters that could manipulate AI prompts
+    // Remove control characters that could manipulate downstream parsing
     return sanitized
         .replace(/[\x00-\x1F\x7F]/g, ' ')
         .replace(/\s+/g, ' ')

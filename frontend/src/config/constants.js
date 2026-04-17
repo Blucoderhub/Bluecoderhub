@@ -30,23 +30,6 @@ export const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 export const ALLOWED_RESUME_TYPES = ['.pdf', '.doc', '.docx'];
 export const ALLOWED_IMAGE_TYPES = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg'];
 
-// Storage
-export const STORAGE_PREFIX = 'bluecoderhub_';
-export const MAX_APPLICATIONS_STORED = 200;
-export const MAX_SUBSCRIBERS_STORED = 1000;
-export const DATA_EXPIRY_DAYS = 90;
-
-// Session & Auth
-export const SESSION_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
-export const MAX_LOGIN_ATTEMPTS = 3;
-export const LOGIN_LOCKOUT_MS = 60 * 1000; // 1 minute
-
-// AI
-export const MAX_AI_INPUT_LENGTH = 500;
-export const MAX_AI_OUTPUT_TOKENS = 1000;
-export const AI_MODEL = 'claude-sonnet-4-20250514';
-export const ANTHROPIC_API_VERSION = '2023-06-01';
-
 // Pagination
 export const BLOG_POSTS_PER_PAGE = 9;
 export const JOBS_PER_PAGE = 10;

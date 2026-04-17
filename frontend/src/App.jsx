@@ -1,11 +1,9 @@
-import { BrowserRouter, Routes, Route, useLocation, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import ErrorBoundary from './components/layout/ErrorBoundary';
-import { initSelfHealing } from './utils/selfHealing';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
-import { isAdminAuthenticated } from './security/auth';
 import Home from './pages/Home';
 import { ROUTES } from './config/routes';
 import { PAGE_TRANSITION } from './config/constants';
@@ -13,7 +11,6 @@ import { PAGE_TRANSITION } from './config/constants';
 const Products = lazy(() => import('./pages/Products'));
 const About = lazy(() => import('./pages/About'));
 const Careers = lazy(() => import('./pages/Careers'));
-const Ace = lazy(() => import('./pages/Ace'));
 const Blog = lazy(() => import('./pages/Blog').then(m => ({ default: m.Blog })));
 const BlogPost = lazy(() => import('./pages/Blog').then(m => ({ default: m.BlogPost })));
 const Admin = lazy(() => import('./pages/Admin'));
@@ -24,14 +21,6 @@ function LoadingFallback() {
             <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
         </div>
     );
-}
-
-function ProtectedAdminRoute({ children }) {
-    const isAuth = isAdminAuthenticated();
-    if (!isAuth) {
-        return <Navigate to={ROUTES.ADMIN} replace />;
-    }
-    return children;
 }
 
 function PageWrapper({ children }) {
@@ -84,7 +73,6 @@ function AppRoutes() {
                         <Route path={ROUTES.PRODUCTS} element={<PageWrapper><Products /></PageWrapper>} />
                         <Route path={ROUTES.ABOUT} element={<PageWrapper><About /></PageWrapper>} />
                         <Route path={ROUTES.CAREERS} element={<PageWrapper><Careers /></PageWrapper>} />
-                        <Route path={ROUTES.ACE} element={<PageWrapper><Ace /></PageWrapper>} />
                         <Route path={ROUTES.BLOG} element={<PageWrapper><Blog /></PageWrapper>} />
                         <Route path={ROUTES.BLOG_POST} element={<PageWrapper><BlogPost /></PageWrapper>} />
                         <Route path={ROUTES.ADMIN} element={<Admin />} />
@@ -98,12 +86,6 @@ function AppRoutes() {
 }
 
 export default function App() {
-    // Boot the self-healing engine once on app startup.
-    // Admin must be authenticated to pause/stop it from Admin panel.
-    useEffect(() => {
-        initSelfHealing();
-    }, []);
-
     return (
         <ErrorBoundary>
             <BrowserRouter>

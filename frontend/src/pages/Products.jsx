@@ -6,6 +6,7 @@ import LiquidBlob from '../components/animations/LiquidBlob';
 import products from '../data/products.json';
 import { MdSchool, MdAccountBalance } from 'react-icons/md';
 import { FiCodepen, FiCpu, FiActivity, FiSettings, FiLayers, FiDatabase, FiZap, FiGlobe } from 'react-icons/fi';
+import { api } from '../utils/api';
 
 const getProductIcon = (id) => {
     switch (id) {
@@ -18,10 +19,18 @@ const getProductIcon = (id) => {
 export default function Products() {
     const [notifyEmail, setNotifyEmail] = useState('');
     const [notified, setNotified] = useState(false);
+    const [notifyError, setNotifyError] = useState('');
 
-    const handleNotify = (e) => {
+    const handleNotify = async (e) => {
         e.preventDefault();
-        setNotified(true);
+        setNotifyError('');
+        try {
+            await api.subscribe(notifyEmail, 'financehub_waitlist');
+            setNotified(true);
+            setNotifyEmail('');
+        } catch (err) {
+            setNotifyError(err.message || 'Subscription failed.');
+        }
     };
 
     return (
@@ -39,7 +48,7 @@ export default function Products() {
                         Products That <span className="gradient-text">Transform</span>
                     </h1>
                     <p className="text-gray-400 text-lg leading-relaxed">
-                        We build products that solve real problems at scale—from AI-powered learning platforms
+                        We build products that solve real problems at scale—from adaptive learning platforms
                         to intelligent financial management tools.
                     </p>
                 </div>
@@ -64,9 +73,9 @@ export default function Products() {
                                     <div className="text-white opacity-40 text-xs font-mono mt-1">FLAGSHIP SUBSIDIARY</div>
                                 </div>
                             </div>
-                            <p className="text-white opacity-60 font-medium mb-4">AI-Powered Learning Platform</p>
+                            <p className="text-white opacity-60 font-medium mb-4">Adaptive Learning Platform</p>
                             <p className="text-gray-400 leading-relaxed mb-6">
-                                An intelligent learning platform that personalizes education through adaptive AI algorithms,
+                                An intelligent learning platform that personalizes education through structured learning paths,
                                 gamified experiences, and real-time progress tracking. Empowering learners worldwide with
                                 interactive coding challenges, peer collaboration, and certified learning paths.
                             </p>
@@ -110,7 +119,7 @@ export default function Products() {
                                     <div className="text-white opacity-50 text-sm">Learn • Code • Grow</div>
                                 </div>
                                 <div className="space-y-3">
-                                    {['React Development Path', 'Full Stack Mastery', 'AI & Machine Learning', 'DevOps Professional'].map((course, i) => (
+                                    {['React Development Path', 'Full Stack Mastery', 'Data Science Foundations', 'DevOps Professional'].map((course, i) => (
                                         <motion.div
                                             key={course}
                                             initial={{ opacity: 0, x: -20 }}
@@ -206,6 +215,7 @@ export default function Products() {
                                     >
                                         Notify Me
                                     </button>
+                                    {notifyError && <p className="text-red-400 text-xs">{notifyError}</p>}
                                 </form>
                             )}
                         </div>

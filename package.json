@@ -1,13 +1,14 @@
 {
-  "name": "bluecoderhub-backend",
+  "name": "bluecoderhub",
   "version": "1.0.0",
+  "private": true,
   "type": "module",
-  "description": "Bluecoderhub API Server",
   "scripts": {
-    "dev": "node src/server.js",
-    "start": "node src/server.js",
-    "db:migrate": "node scripts/migrate.js",
-    "admin:create": "node scripts/create-admin.js"
+    "build": "npm --prefix frontend run build",
+    "start": "node backend/src/server.js",
+    "dev": "node backend/src/server.js",
+    "db:migrate": "node backend/scripts/migrate.js",
+    "admin:create": "node backend/scripts/create-admin.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

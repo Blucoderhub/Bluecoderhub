@@ -10,5 +10,3 @@
 export * from './common/index.js';
 export * from './animations/index.js';
 export * from './layout/index.js';
-
-export { default as SelfHealingPanel } from './admin/SelfHealingPanel.jsx';

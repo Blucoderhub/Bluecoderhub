@@ -7,7 +7,7 @@
  * Usage:
  *   import { Home, Button } from './src';
  *   import { ROUTES, APP_NAME } from './src/config';
- *   import { useScroll, useAI } from './src/hooks';
+ *   import { useScroll } from './src/hooks';
  */
 
 // Core exports
@@ -19,17 +19,6 @@ export * from './lib/index.js';
 
 // Page exports
 export * from './pages/index.js';
-
-// Self-healing exports
-export {
-    initSelfHealing,
-    isSelfHealingEnabled,
-    setSelfHealingEnabled,
-    calculateHealthScore,
-    getHealingLog,
-    subscribe as subscribeHealing,
-    DEFAULT_CONFIG,
-} from './utils/selfHealing.js';
 
 // App entry
 export { default as App } from './App.jsx';

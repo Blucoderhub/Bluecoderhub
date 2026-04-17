@@ -9,4 +9,3 @@
 export { useScroll } from './useScroll.js';
 export { useScrollTrigger, useGSAPContext, gsap, ScrollTrigger } from './useScrollTrigger.js';
 export { useIntersection } from './useIntersection.js';
-export { useAI } from './useAI.js';

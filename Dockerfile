@@ -1,15 +1,26 @@
-# Stage 1: Build
-FROM node:20-alpine as build
+FROM node:20-alpine AS root-deps
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+COPY package.json package-lock*.json ./
+RUN npm install --omit=dev
 
-# Stage 2: Serve
-FROM nginx:stable-alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-# Custom nginx config for SPA routing - Optional if using simple setup
-# COPY nginx.conf /etc/nginx/conf.d/default.conf 
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+FROM node:20-alpine AS frontend-deps
+WORKDIR /app/frontend
+COPY frontend/package*.json ./
+RUN npm install
+
+FROM node:20-alpine AS build
+WORKDIR /app
+COPY --from=root-deps /app/node_modules ./node_modules
+COPY --from=frontend-deps /app/frontend/node_modules ./frontend/node_modules
+COPY . .
+RUN npm --prefix frontend run build
+
+FROM node:20-alpine AS runtime
+ENV NODE_ENV=production
+WORKDIR /app
+COPY package.json ./
+COPY --from=root-deps /app/node_modules ./node_modules
+COPY --from=build /app/backend ./backend
+COPY --from=build /app/frontend/dist ./frontend/dist
+EXPOSE 8080
+CMD ["node", "backend/src/server.js"]
