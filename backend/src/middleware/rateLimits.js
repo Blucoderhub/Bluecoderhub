@@ -1,18 +1,21 @@
 import rateLimit from 'express-rate-limit';
 
-const IP_HEADER = 'trust proxy';
+function getClientIp(req) {
+  const forwarded = req.headers['x-forwarded-for'];
+  if (forwarded) {
+    return forwarded.split(',')[0].trim();
+  }
+  return req.ip || req.socket?.remoteAddress || 'unknown';
+}
 
 export const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 300,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => {
-    return req.ip || req.headers['x-forwarded-for'] || 'unknown';
-  },
+  keyGenerator: getClientIp,
   skip: (req) => {
-    const healthCheck = req.path === '/api/health';
-    return healthCheck;
+    return req.path === '/api/health';
   }
 });
 
@@ -22,10 +25,7 @@ export const authLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: 'Too many authentication attempts', code: 'rate_limited' },
-  keyGenerator: (req) => {
-    return req.ip || req.headers['x-forwarded-for'] || 'unknown';
-  },
-  skipSuccessfulRequests: false
+  keyGenerator: getClientIp
 });
 
 export const writeLimiter = rateLimit({
@@ -34,9 +34,7 @@ export const writeLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: 'Too many write requests', code: 'rate_limited' },
-  keyGenerator: (req) => {
-    return req.ip || req.headers['x-forwarded-for'] || 'unknown';
-  }
+  keyGenerator: getClientIp
 });
 
 export const strictLimiter = rateLimit({
@@ -45,7 +43,5 @@ export const strictLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: 'Too many requests', code: 'rate_limited' },
-  keyGenerator: (req) => {
-    return req.ip || req.headers['x-forwarded-for'] || 'unknown';
-  }
+  keyGenerator: getClientIp
 });

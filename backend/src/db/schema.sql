@@ -49,3 +49,4 @@ CREATE INDEX IF NOT EXISTS idx_blog_posts_slug ON blog_posts (slug);
 CREATE INDEX IF NOT EXISTS idx_applications_created_at ON applications (created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_applications_status ON applications (status);
 CREATE INDEX IF NOT EXISTS idx_subscribers_created_at ON subscribers (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_users_email ON users (email);

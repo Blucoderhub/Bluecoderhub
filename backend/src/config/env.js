@@ -21,12 +21,6 @@ const env = {
     .filter(Boolean)
 };
 
-export function assertDatabaseConfigured() {
-  if (!env.databaseUrl) {
-    throw new Error('DATABASE_URL is required');
-  }
-}
-
 export { env };
 
 export function assertDatabaseConfigured() {

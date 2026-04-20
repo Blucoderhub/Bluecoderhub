@@ -101,7 +101,7 @@ router.post('/', authenticate, requireRole('admin'), writeLimiter, validate(blog
 
     const result = await query(
       `INSERT INTO blog_posts (slug, title, category, author, excerpt, content, tags, published, created_by)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
        RETURNING id, slug, title, category, author, excerpt, content, tags, published, created_at, updated_at`,
       [slug, data.title, data.category, data.author, data.excerpt, data.content, data.tags, data.published, req.user.id]
     );

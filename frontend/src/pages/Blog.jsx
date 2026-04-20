@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import FadeInSection from '../components/animations/FadeInSection';
 import { api } from '../utils/api';
-import { sanitizeLongText } from '../utils/sanitize';
+import { sanitizeBlogContent } from '../utils/sanitize';
 
 function formatDate(value) {
     return new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
