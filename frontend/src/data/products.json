@@ -22,40 +22,5 @@
             "completion": "94%"
         },
         "category": "EdTech"
-    },
-    {
-        "id": "financeapp",
-        "name": "FinanceHub",
-        "tagline": "Smart Financial Management",
-        "description": "A revolutionary financial management platform currently in the prototype phase. We are focused on building a robust core architecture before unveiling its full capabilities.",
-        "status": "prototype",
-        "url": null,
-        "icon": "💰",
-        "color": "#ffffff",
-        "progress": 50,
-        "features": [],
-        "stats": {
-            "beta": "Q2 2026",
-            "signups": "500+"
-        },
-        "category": "FinTech"
-    },
-    {
-        "id": "hrplatform",
-        "name": "TeamFlow HRM",
-        "tagline": "Next-Gen HR Management",
-        "description": "A comprehensive HR platform streamlining hiring, onboarding, payroll, and performance management.",
-        "status": "planned",
-        "url": null,
-        "icon": "👥",
-        "color": "#ffffff",
-        "features": [
-            "Smart Recruitment Pipeline",
-            "Automated Onboarding",
-            "Payroll Management",
-            "Performance Reviews",
-            "Leave Management"
-        ],
-        "category": "HRTech"
     }
 ]

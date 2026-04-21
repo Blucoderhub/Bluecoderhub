@@ -8,12 +8,10 @@ import Home from './pages/Home';
 import { ROUTES } from './config/routes';
 import { PAGE_TRANSITION } from './config/constants';
 
-const Products = lazy(() => import('./pages/Products'));
 const About = lazy(() => import('./pages/About'));
 const Careers = lazy(() => import('./pages/Careers'));
 const Blog = lazy(() => import('./pages/Blog').then(m => ({ default: m.Blog })));
 const BlogPost = lazy(() => import('./pages/Blog').then(m => ({ default: m.BlogPost })));
-const Admin = lazy(() => import('./pages/Admin'));
 
 function LoadingFallback() {
     return (
@@ -58,29 +56,26 @@ function NotFound() {
 
 function AppRoutes() {
     const location = useLocation();
-    const isAdminRoute = location.pathname.startsWith('/admin');
 
     return (
         <div className="relative min-h-screen">
             <div className="bg-glow-top" />
             <div className="bg-glow-bottom" />
             <div className="noise-overlay" />
-            {!isAdminRoute && <Navbar />}
+            <Navbar />
             <AnimatePresence mode="wait">
                 <Suspense fallback={<LoadingFallback />}>
                     <Routes location={location} key={location.pathname}>
                         <Route path={ROUTES.HOME} element={<PageWrapper><Home /></PageWrapper>} />
-                        <Route path={ROUTES.PRODUCTS} element={<PageWrapper><Products /></PageWrapper>} />
                         <Route path={ROUTES.ABOUT} element={<PageWrapper><About /></PageWrapper>} />
                         <Route path={ROUTES.CAREERS} element={<PageWrapper><Careers /></PageWrapper>} />
                         <Route path={ROUTES.BLOG} element={<PageWrapper><Blog /></PageWrapper>} />
                         <Route path={ROUTES.BLOG_POST} element={<PageWrapper><BlogPost /></PageWrapper>} />
-                        <Route path={ROUTES.ADMIN} element={<Admin />} />
                         <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
                     </Routes>
                 </Suspense>
             </AnimatePresence>
-            {!isAdminRoute && <Footer />}
+            <Footer />
         </div>
     );
 }

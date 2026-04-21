@@ -8,13 +8,8 @@ const footerLinks = {
         { label: 'Careers', path: '/careers' },
         { label: 'Blog', path: '/blog' },
     ],
-    Products: [
+    Product: [
         { label: 'Bluelearnerhub', external: 'https://bluelearnerhub.com' },
-        { label: 'FinanceHub (Soon)', path: '/products' },
-        { label: 'TeamFlow (Planned)', path: '/products' },
-    ],
-    Platform: [
-        { label: 'Admin CMS', path: '/admin' },
     ],
 };
 import Logo from './Logo';

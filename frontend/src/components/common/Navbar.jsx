@@ -5,12 +5,6 @@ import { useScroll } from '../../hooks/useScroll';
 
 const navLinks = [
     { label: 'Home', path: '/' },
-    {
-        label: 'Products', path: '/products', dropdown: [
-            { label: '🎓 Bluelearnerhub', path: '/products', anchor: 'bluelearnerhub', external: 'https://bluelearnerhub.com' },
-            { label: '💰 FinanceHub', path: '/products', anchor: 'financeapp' },
-        ]
-    },
     { label: 'About', path: '/about' },
     { label: 'Careers', path: '/careers' },
     { label: 'Blog', path: '/blog' },

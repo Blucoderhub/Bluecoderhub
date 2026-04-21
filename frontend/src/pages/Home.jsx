@@ -6,17 +6,7 @@ import FadeInSection from '../components/animations/FadeInSection';
 import Button from '../components/common/Button';
 import products from '../data/products.json';
 import { Link } from 'react-router-dom';
-import { MdSchool, MdAccountBalance, MdGroups } from 'react-icons/md';
-
-const getProductIcon = (id) => {
-    switch (id) {
-        case 'bluelearnerhub': return <MdSchool />;
-        case 'financeapp': return <MdAccountBalance />;
-        case 'hrplatform': return <MdGroups />;
-        default: return <MdGroups />;
-    }
-};
-
+import { MdSchool } from 'react-icons/md';
 import { FiUser } from 'react-icons/fi';
 
 export default function Home() {
@@ -85,19 +75,18 @@ export default function Home() {
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="flex flex-col lg:flex-row justify-between items-end mb-20 gap-8">
                         <div className="max-w-2xl">
-                            <span className="text-accent-cyan font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Product Ecosystem</span>
-                            <h2 className="text-5xl lg:text-6xl font-display font-bold mb-6">Built for Purpose, <br />Scalable by Design.</h2>
+                            <span className="text-accent-cyan font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Our Product</span>
+                            <h2 className="text-5xl lg:text-6xl font-display font-bold mb-6">Bluelearnerhub: <br />Transforming Education.</h2>
                             <p className="text-lg text-gray-600">
-                                We limit our focus to three core industries to ensure absolute mastery. 
-                                Explore our specialized software tiers.
+                                Our flagship product is an intelligent learning platform that personalizes education through adaptive learning paths, gamified experiences, and real-time progress tracking.
                             </p>
                         </div>
-                        <Link to="/products" className="text-black font-bold border-b-2 border-black pb-1 hover:opacity-60 transition-all">
-                            View All Platforms →
-                        </Link>
+                        <a href="https://bluelearnerhub.com" target="_blank" rel="noopener noreferrer" className="text-black font-bold border-b-2 border-black pb-1 hover:opacity-60 transition-all">
+                            Visit Bluelearnerhub →
+                        </a>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div className="grid grid-cols-1 gap-12">
                         {products.map((p, i) => (
                             <motion.div 
                                 key={p.id}
@@ -105,16 +94,16 @@ export default function Home() {
                                 className="group"
                             >
                                 <div className="text-6xl mb-8 group-hover:scale-110 transition-transform duration-500 origin-left text-brand-blue">
-                                    {getProductIcon(p.id)}
+                                    {<MdSchool />}
                                 </div>
                                 <h3 className="text-2xl font-display font-bold mb-3">{p.name}</h3>
                                 <p className="text-gray-500 mb-6 line-clamp-3 leading-relaxed">
                                     {p.description}
                                 </p>
                                 <div className="flex items-center gap-3">
-                                    <Link to={`/products#${p.id}`} className="text-sm font-bold hover:text-accent-cyan transition-colors">
+                                    <a href={p.url} target="_blank" rel="noopener noreferrer" className="text-sm font-bold hover:text-accent-cyan transition-colors">
                                         Learn More
-                                    </Link>
+                                    </a>
                                     <span className="w-0 h-[1px] bg-accent-cyan group-hover:w-12 transition-all duration-500" />
                                 </div>
                             </motion.div>
