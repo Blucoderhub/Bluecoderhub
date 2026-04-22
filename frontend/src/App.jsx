@@ -10,7 +10,7 @@ import { PAGE_TRANSITION } from './config/constants';
 
 const About = lazy(() => import('./pages/About'));
 const Careers = lazy(() => import('./pages/Careers'));
-const Blog = lazy(() => import('./pages/Blog').then(m => ({ default: m.Blog })));
+const Blog = lazy(() => import('./pages/Blog'));
 const BlogPost = lazy(() => import('./pages/Blog').then(m => ({ default: m.BlogPost })));
 
 function LoadingFallback() {
@@ -54,13 +54,15 @@ function NotFound() {
     );
 }
 
+import { PremiumBackground, CustomCursor } from './components/animations';
+
 function AppRoutes() {
     const location = useLocation();
 
     return (
         <div className="relative min-h-screen">
-            <div className="bg-glow-top" />
-            <div className="bg-glow-bottom" />
+            <PremiumBackground />
+            <CustomCursor />
             <div className="noise-overlay" />
             <Navbar />
             <AnimatePresence mode="wait">

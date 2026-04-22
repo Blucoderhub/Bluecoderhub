@@ -15,6 +15,8 @@ const sizes = {
     xl: 'px-9 py-4 text-lg rounded-2xl',
 };
 
+import { Magnetic } from '../animations';
+
 export default function Button({
     children,
     variant = 'primary',
@@ -47,29 +49,33 @@ export default function Button({
 
     if (href) {
         return (
-            <motion.a
-                href={href}
-                target={target}
-                rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+            <Magnetic strength={0.3}>
+                <motion.a
+                    href={href}
+                    target={target}
+                    rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+                    whileHover={{ scale: disabled ? 1 : 1.03 }}
+                    whileTap={{ scale: disabled ? 1 : 0.97 }}
+                    className={classes}
+                >
+                    {content}
+                </motion.a>
+            </Magnetic>
+        );
+    }
+
+    return (
+        <Magnetic strength={0.3}>
+            <motion.button
+                type={type}
+                onClick={onClick}
+                disabled={disabled || loading}
                 whileHover={{ scale: disabled ? 1 : 1.03 }}
                 whileTap={{ scale: disabled ? 1 : 0.97 }}
                 className={classes}
             >
                 {content}
-            </motion.a>
-        );
-    }
-
-    return (
-        <motion.button
-            type={type}
-            onClick={onClick}
-            disabled={disabled || loading}
-            whileHover={{ scale: disabled ? 1 : 1.03 }}
-            whileTap={{ scale: disabled ? 1 : 0.97 }}
-            className={classes}
-        >
-            {content}
-        </motion.button>
+            </motion.button>
+        </Magnetic>
     );
 }
